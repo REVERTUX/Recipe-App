@@ -1,10 +1,6 @@
 import { Outlet, Link } from 'react-router-dom';
 
-import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-
+import { Box, AppBar, Toolbar, Typography, Container } from '@mui/material';
 import CustomNavLink, { CustomNavLinkProps } from './components/CustomNavLink';
 
 const navItems: CustomNavLinkProps[] = [
@@ -38,7 +34,9 @@ function Layout() {
           </Toolbar>
         </AppBar>
       </Box>
-      <Outlet />
+      <Container sx={{ paddingTop: '8px' }}>
+        <Outlet />
+      </Container>
     </div>
   );
 }
