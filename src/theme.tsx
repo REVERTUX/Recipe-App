@@ -14,6 +14,11 @@ const theme = createTheme({
       main: red.A400,
     },
   },
+  typography: {
+    body1: {
+      fontSize: 18,
+    },
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: `
