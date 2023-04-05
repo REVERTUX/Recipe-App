@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 
 import { recipe } from '../services/mock-recipe';
 import RecipeBasic from './RecipeBasic';
+import ReviewList from './ReviewList';
 
 const StyledList = styled('ul')(({ theme }) => ({
   padding: theme.spacing(0.5, 3),
@@ -62,6 +63,7 @@ function RecipePage() {
       {directions.map((direction) => (
         <p key={direction.substring(0, 20)}>{direction}</p>
       ))}
+      <ReviewList reviews={reviews} />
     </Container>
   );
 }
