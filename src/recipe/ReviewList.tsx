@@ -8,7 +8,6 @@ const StyledWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(2),
-  paddingTop: theme.spacing(3),
 }));
 
 interface ReviewListProps {
