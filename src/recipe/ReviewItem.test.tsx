@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import ReviewItem from './ReviewItem';
 import { Review } from './model';
@@ -14,16 +14,16 @@ const mockReview: Review = {
 
 describe('ReviewItem', () => {
   it('should render all fields', () => {
-    const { getByText, getByRole } = render(<ReviewItem review={mockReview} />);
+    render(<ReviewItem review={mockReview} />);
 
-    expect(getByText('I like this recipe')).toBeInTheDocument();
-    expect(getByText('testuser')).toBeInTheDocument();
-    expect(getByText('2022-04-05')).toBeInTheDocument();
-    expect(getByRole('img')).toBeInTheDocument();
+    expect(screen.getByText('I like this recipe')).toBeInTheDocument();
+    expect(screen.getByText('testuser')).toBeInTheDocument();
+    expect(screen.getByText('2022-04-05')).toBeInTheDocument();
+    expect(screen.getByRole('img')).toBeInTheDocument();
   });
   it('should rating be readonly', () => {
-    const { getByRole } = render(<ReviewItem review={mockReview} />);
+    render(<ReviewItem review={mockReview} />);
 
-    expect(getByRole('img')).toHaveClass('MuiRating-readOnly');
+    expect(screen.getByRole('img')).toHaveClass('MuiRating-readOnly');
   });
 });

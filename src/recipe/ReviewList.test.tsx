@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import { Review } from './model';
 import ReviewList from './ReviewList';
@@ -23,12 +23,12 @@ const mockReviews: Review[] = [
 
 describe('ReviewList', () => {
   it('should render header', () => {
-    const { getByText } = render(<ReviewList reviews={mockReviews} />);
-    expect(getByText('Comments:')).toBeInTheDocument();
+    render(<ReviewList reviews={mockReviews} />);
+    expect(screen.getByText('Comments:')).toBeInTheDocument();
   });
   it('should render 2 ReviewItem', () => {
-    const { getByText } = render(<ReviewList reviews={mockReviews} />);
-    expect(getByText('I like this recipe')).toBeInTheDocument();
-    expect(getByText('I do not like this recipe')).toBeInTheDocument();
+    render(<ReviewList reviews={mockReviews} />);
+    expect(screen.getByText('I like this recipe')).toBeInTheDocument();
+    expect(screen.getByText('I do not like this recipe')).toBeInTheDocument();
   });
 });
