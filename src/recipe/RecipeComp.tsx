@@ -1,11 +1,11 @@
 import { Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { recipe } from '../services/mock-recipe';
 import RecipeBasic from './RecipeBasic';
 import ReviewList from './ReviewList';
 import RecipeDirections from './RecipeDirections';
 import RecipeIngredientsInfo from './RecipeIngredientsInfo';
+import { Recipe } from './model';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
@@ -13,8 +13,12 @@ const StyledContainer = styled(Container)(({ theme }) => ({
   gap: theme.spacing(2),
 }));
 
-function RecipePage() {
-  const {
+interface RecipeCompProps {
+  recipe: Recipe;
+}
+
+function RecipeComp({
+  recipe: {
     categories,
     cookingTime,
     description,
@@ -27,7 +31,8 @@ function RecipePage() {
     reviews,
     servings,
     title,
-  } = recipe;
+  },
+}: RecipeCompProps) {
   return (
     <StyledContainer maxWidth="md">
       <RecipeBasic
@@ -45,4 +50,4 @@ function RecipePage() {
   );
 }
 
-export default RecipePage;
+export default RecipeComp;
