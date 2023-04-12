@@ -11,6 +11,7 @@ export interface Recipe {
   rating: number;
   reviews: Review[];
   categories: string[];
+  calories: number;
 }
 
 export interface Review {
@@ -33,10 +34,7 @@ export interface Ingredient {
 }
 
 export interface Nutrition {
-  calories: number;
   fat: number;
   protein: number;
   carbs: number;
-  fiber: number;
-  sugar: number;
 }

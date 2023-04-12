@@ -4,7 +4,7 @@ import { Pagination } from '@mui/material';
 
 import { recipes } from '../services/mock-recipe';
 import { useGetRecipesQuery } from '../services/recipe';
-import RecipeItem from './RecipeItem';
+import RecipeItem from '../recipes/RecipeItem';
 
 const RecipesContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
@@ -19,7 +19,7 @@ const WrapperContainer = styled(Container)(({ theme }) => ({
   gap: theme.spacing(3),
 }));
 
-function Recipes() {
+function RecipesPage() {
   // const { data: recipes, isLoading, isFetching } = useGetRecipesQuery();
 
   // if (isLoading) return null;
@@ -37,4 +37,4 @@ function Recipes() {
   );
 }
 
-export default Recipes;
+export default RecipesPage;
