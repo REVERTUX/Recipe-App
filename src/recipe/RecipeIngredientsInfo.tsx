@@ -1,35 +1,38 @@
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { Recipe } from './model';
+import { Recipe } from '../models/recipe';
 
 const StyledList = styled('ul')(({ theme }) => ({
   padding: theme.spacing(0.5, 3),
   margin: '0',
 }));
 
-type RecipeIngredientsInfoProps = Pick<Recipe, 'ingredients' | 'nutrition'>;
+type RecipeIngredientsInfoProps = Pick<Recipe, 'ingredients' | 'nutrients'>;
 
 function RecipeIngredientsInfo({
   ingredients,
-  nutrition,
+  nutrients,
 }: RecipeIngredientsInfoProps) {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
       <div>
         <Typography variant="h5">Ingredients:</Typography>
         <StyledList>
-          {ingredients.map(({ amount, name, unit }) => (
-            <li key={name}>
-              {name} {amount} {unit}
-            </li>
-          ))}
+          {ingredients.map(
+            ({ amount, ingredientName, ingredientUnitName, id }) => (
+              <li key={id}>
+                {ingredientName} {amount === 0 ? '' : amount}{' '}
+                {ingredientUnitName}
+              </li>
+            )
+          )}
         </StyledList>
       </div>
       <div>
-        <Typography variant="h5">Nutrition:</Typography>
+        <Typography variant="h5">Nutrients:</Typography>
         <StyledList>
-          {Object.entries(nutrition).map(([key, value]) => (
+          {Object.entries(nutrients).map(([key, value]) => (
             <li key={key}>
               {key} {value}g
             </li>

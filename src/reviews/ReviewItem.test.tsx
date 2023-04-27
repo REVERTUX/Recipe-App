@@ -1,13 +1,14 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { subMinutes } from 'date-fns';
 
 import ReviewItem from './ReviewItem';
-import { Review } from './model';
+import { Review } from '../models/review';
 
 const mockReview: Review = {
   id: '1',
   comment: 'I like this recipe',
-  date: '2022-04-05',
+  creationDate: subMinutes(new Date(), 30).toJSON(),
   rating: 4,
   user: 'testuser',
 };
@@ -18,7 +19,7 @@ describe('ReviewItem', () => {
 
     expect(screen.getByText('I like this recipe')).toBeInTheDocument();
     expect(screen.getByText('testuser')).toBeInTheDocument();
-    expect(screen.getByText('2022-04-05')).toBeInTheDocument();
+    expect(screen.getByText('30 minutes ago')).toBeInTheDocument();
     expect(screen.getByRole('img')).toBeInTheDocument();
   });
   it('should rating be readonly', () => {

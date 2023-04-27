@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { Recipe } from '../recipe/model';
+import { Recipe } from '../models/recipe';
 
 export const recipe: Recipe = {
   id: '1',
@@ -8,7 +8,7 @@ export const recipe: Recipe = {
   categories: ['dinner', 'meat'],
   cookingTime: { value: 1, unit: 'h' },
   description: 'Delicious and easy pesto pasta recipe',
-  directions: [
+  steps: [
     'Bring a large pot of salted water to a boil.',
     'Cook pasta according to package instructions until al dente.',
     'While the pasta is cooking, heat olive oil in a large pan over medium heat. Add garlic and cherry tomatoes and cook until the tomatoes are soft and starting to burst.',
@@ -60,7 +60,7 @@ export const recipes: Recipe[] = [
     categories: ['dinner', 'meat'],
     cookingTime: { value: 1, unit: 'h' },
     description: 'Delicious and easy pesto pasta recipe',
-    directions: [
+    steps: [
       'Bring a large pot of salted water to a boil.',
       'Cook pasta according to package instructions until al dente.',
       'While the pasta is cooking, heat olive oil in a large pan over medium heat. Add garlic and cherry tomatoes and cook until the tomatoes are soft and starting to burst.',
@@ -110,7 +110,7 @@ export const recipes: Recipe[] = [
     categories: ['dinner', 'meat'],
     cookingTime: { value: 1, unit: 'h' },
     description: 'Delicious and easy pesto pasta recipe',
-    directions: [
+    steps: [
       'Bring a large pot of salted water to a boil.',
       'Cook pasta according to package instructions until al dente.',
       'While the pasta is cooking, heat olive oil in a large pan over medium heat. Add garlic and cherry tomatoes and cook until the tomatoes are soft and starting to burst.',

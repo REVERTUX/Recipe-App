@@ -3,7 +3,7 @@ import TakeoutDiningIcon from '@mui/icons-material/TakeoutDining';
 import { Chip, Rating, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { Recipe } from './model';
+import { Recipe } from '../models/recipe';
 
 const TimeContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -49,8 +49,8 @@ function RecipeBasic({
         <Rating value={rating} max={5} precision={0.5} readOnly />
       </Typography>
       <Stack direction="row" spacing={1}>
-        {categories.map((category) => (
-          <Chip key={category} label={category} />
+        {categories.map(({ categoryName, id }) => (
+          <Chip key={id} label={categoryName} />
         ))}
       </Stack>
     </div>
