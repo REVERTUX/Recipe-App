@@ -1,39 +1,29 @@
-import Container from '@mui/material/Container';
-import { styled } from '@mui/material/styles';
-import { Pagination } from '@mui/material';
+import { useState } from 'react';
+import { useGetRecipesQuery } from '../services/recipes';
+import RecipesView from '../recipes/RecipesView';
 
-import { recipes } from '../services/mock-recipe';
-import { useGetRecipesQuery } from '../services/recipe';
-import RecipeItem from '../recipes/RecipeItem';
-
-const RecipesContainer = styled(Container)(({ theme }) => ({
-  display: 'flex',
-  gap: theme.spacing(2),
-  flexDirection: 'column',
-}));
-
-const WrapperContainer = styled(Container)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: theme.spacing(3),
-}));
+const ITEMS_PER_PAGE = 10;
 
 function RecipesPage() {
-  // const { data: recipes, isLoading, isFetching } = useGetRecipesQuery();
+  const [page, setPage] = useState<number>(1);
+  const { data, isFetching } = useGetRecipesQuery({
+    take: ITEMS_PER_PAGE,
+    skip: page * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
+  });
 
-  // if (isLoading) return null;
-  // if (!isFetching) return null;
+  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   return (
-    <WrapperContainer>
-      <RecipesContainer>
-        {recipes.map((recipe) => (
-          <RecipeItem key={recipe.id} recipe={recipe} />
-        ))}
-      </RecipesContainer>
-      <Pagination count={Math.ceil(recipes.length / 10)} />
-    </WrapperContainer>
+    <RecipesView
+      recipes={data?.data}
+      count={data?.count}
+      itemsPerPage={ITEMS_PER_PAGE}
+      page={page}
+      isFetching={isFetching}
+      handlePageChange={handlePageChange}
+    />
   );
 }
 

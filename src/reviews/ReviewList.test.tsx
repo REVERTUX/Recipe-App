@@ -1,21 +1,21 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import { Review } from './model';
 import ReviewList from './ReviewList';
+import { Review } from '../models/review';
 
 const mockReviews: Review[] = [
   {
     id: '1',
     comment: 'I like this recipe',
-    date: '2022-04-05',
+    creationDate: '2022-04-05',
     rating: 4,
     user: 'testuser',
   },
   {
     id: '2',
     comment: 'I do not like this recipe',
-    date: '2022-03-07',
+    creationDate: '2022-03-07',
     rating: 2,
     user: 'neagtiveuser',
   },

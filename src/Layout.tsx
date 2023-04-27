@@ -34,7 +34,12 @@ function Layout() {
           </Toolbar>
         </AppBar>
       </Box>
-      <Container sx={{ paddingTop: '8px' }}>
+      <Container
+        sx={{
+          paddingTop: (theme) => theme.spacing(1),
+          paddingBottom: (theme) => theme.spacing(2),
+        }}
+      >
         <Outlet />
       </Container>
     </div>

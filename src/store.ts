@@ -1,14 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { recipeApi } from './services/recipe';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { recipesApi } from './services/recipes';
+import { reviewsApi } from './services/reviews';
 
 export const store = configureStore({
   reducer: {
-    [recipeApi.reducerPath]: recipeApi.reducer,
+    [recipesApi.reducerPath]: recipesApi.reducer,
+    [reviewsApi.reducerPath]: reviewsApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(recipeApi.middleware),
+    getDefaultMiddleware()
+      .concat(recipesApi.middleware)
+      .concat(reviewsApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 

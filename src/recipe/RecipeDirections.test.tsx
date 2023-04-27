@@ -1,20 +1,25 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import RecipeDirections from './RecipeDirections';
+import RecipeSteps from './RecipeSteps';
+import { Step } from '../models/recipe';
 
-const mockDirections: string[] = [
-  'Bring a large pot of salted water to a boil.',
-  'Cook pasta according to package instructions until al dente.',
+const mockSteps: Step[] = [
+  { id: '1', step: 'Bring a large pot of salted water to a boil.', order: 1 },
+  {
+    id: '2',
+    step: 'Cook pasta according to package instructions until al dente.',
+    order: 2,
+  },
 ];
 
-describe('RecipeDirectionsInfo', () => {
+describe('RecipeStepsInfo', () => {
   it('should render headers', () => {
-    render(<RecipeDirections directions={mockDirections} />);
+    render(<RecipeSteps steps={mockSteps} />);
 
     expect(screen.getByText('Steps:')).toBeInTheDocument();
   });
   it('should render nutrition', () => {
-    render(<RecipeDirections directions={mockDirections} />);
+    render(<RecipeSteps steps={mockSteps} />);
 
     expect(
       screen.getByText('Bring a large pot of salted water to a boil.')

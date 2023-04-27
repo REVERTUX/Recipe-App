@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.14",
     "@reduxjs/toolkit": "^1.9.3",
+    "date-fns": "^2.29.3",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
