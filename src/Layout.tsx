@@ -36,7 +36,7 @@ function Layout() {
       </Box>
       <Container
         sx={{
-          paddingTop: (theme) => theme.spacing(1),
+          paddingTop: (theme) => theme.spacing(2),
           paddingBottom: (theme) => theme.spacing(2),
         }}
       >
