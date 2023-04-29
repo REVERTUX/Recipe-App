@@ -1,10 +1,11 @@
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
-import { Pagination, Paper } from '@mui/material';
+import { Box, Pagination, Paper } from '@mui/material';
 
 import RecipeItem from './RecipeListItem';
 import { RecipeListView } from '../models/recipe';
 import RecipeBasicPlaceholder from '../recipe/RecipeBasicPlaceholder';
+import SideBar from './SideBar';
 
 const RecipesContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
@@ -49,8 +50,8 @@ function RecipesView({
     const arr = [];
     for (let index = 0; index < quantity; index += 1) {
       arr.push(
-        <StyledPaper>
-          <RecipeBasicPlaceholder key={index} />
+        <StyledPaper key={index}>
+          <RecipeBasicPlaceholder />
         </StyledPaper>
       );
     }
@@ -58,15 +59,29 @@ function RecipesView({
     return arr;
   };
 
+  const renderContent = () => {
+    if (isFetching || !recipes) {
+      return getPlaceholderList(itemsPerPage);
+    }
+
+    if (recipes.length === 0) {
+      return (
+        <Box
+          sx={{ textAlign: 'center', padding: (theme) => theme.spacing(2, 0) }}
+        >
+          No results
+        </Box>
+      );
+    }
+
+    return recipes.map((recipe) => (
+      <RecipeItem key={recipe.id} recipe={recipe} />
+    ));
+  };
+
   return (
     <WrapperContainer>
-      <RecipesContainer>
-        {isFetching || !recipes
-          ? getPlaceholderList(itemsPerPage)
-          : recipes.map((recipe) => (
-              <RecipeItem key={recipe.id} recipe={recipe} />
-            ))}
-      </RecipesContainer>
+      <RecipesContainer>{renderContent()}</RecipesContainer>
       <Pagination
         count={Math.ceil((count || 0) / itemsPerPage)}
         page={page}
