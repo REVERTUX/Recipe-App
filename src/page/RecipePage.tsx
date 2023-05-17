@@ -1,5 +1,5 @@
 import { Navigate, useParams } from 'react-router-dom';
-import RecipeView from '../recipe/RecipeView';
+import RecipeView from '../features/recipe/RecipeView';
 import { useGetRecipeQuery } from '../services/recipes';
 
 function RecipePage() {

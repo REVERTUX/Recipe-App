@@ -3,9 +3,8 @@ import { styled } from '@mui/material/styles';
 import { Box, Pagination, Paper } from '@mui/material';
 
 import RecipeItem from './RecipeListItem';
-import { RecipeListView } from '../models/recipe';
+import { RecipeListView } from '../../models/recipe';
 import RecipeBasicPlaceholder from '../recipe/RecipeBasicPlaceholder';
-import SideBar from './SideBar';
 
 const RecipesContainer = styled(Container)(({ theme }) => ({
   display: 'flex',

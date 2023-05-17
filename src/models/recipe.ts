@@ -3,26 +3,39 @@ export interface Recipe {
   title: string;
   description: string;
   image: string;
-  ingredients: Ingredient[];
+  ingredients: RecipeIngredient[];
   steps: Step[];
   cookingTime: CookingTime;
   servings: number;
   nutrients: Nutrients;
   rating: number;
-  categories: Category[];
+  categories: RecipeCategory[];
   calories: number;
 }
+
+export interface CreateRecipe
+  extends Omit<
+    Recipe,
+    'id' | 'rating' | 'categories' | 'steps' | 'ingredients'
+  > {
+  categories: Omit<RecipeCategory, 'id'>[];
+  steps: Omit<Step, 'id'>[];
+  ingredients: CreateRecipeIngredient[];
+}
+
+export type CreateRecipeIngredient = Omit<RecipeIngredient, 'id'>;
 
 export interface CookingTime {
   value: number;
   unit: string;
 }
 
-export interface Ingredient {
+export interface RecipeIngredient {
   id: string;
   ingredientName: string;
   ingredientUnitName: string;
   amount: number;
+  description?: string;
 }
 
 export interface Nutrients {
@@ -31,14 +44,13 @@ export interface Nutrients {
   carbs: number;
 }
 
-export interface Category {
+export interface RecipeCategory {
   id: string;
   categoryName: string;
 }
 
 export interface Step {
   id: string;
-  order: number;
   step: string;
 }
 

@@ -21,5 +21,9 @@
     ".eslintrc.cjs",
     "src"
   ],
+  "baseUrl": "src",
+  "paths": {
+    "src/*": ["./src/*"]
+  },
   "references": [{ "path": "./tsconfig.node.json" }]
 }

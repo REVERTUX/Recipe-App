@@ -1,4 +1,4 @@
-import { useGetReviewsQuery } from '../services/reviews';
+import { useGetReviewsQuery } from '../../services/reviews';
 import ReviewList from './ReviewList';
 
 interface ReviewsListViewProps {

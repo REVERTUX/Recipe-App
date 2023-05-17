@@ -11,17 +11,22 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/setupTests.ts'],
+    setupFiles: ['@testing-library/jest-dom', './src/setupTests.ts'],
   },
   server: {
-    // cors: false,
     origin: 'http://localhost:3000',
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
+        headers: { 'Content-Type': 'application/json' },
       },
+    },
+  },
+  resolve: {
+    alias: {
+      src: 'src/',
     },
   },
 });

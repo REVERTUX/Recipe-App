@@ -1,11 +1,10 @@
-import { useLocation } from 'react-router-dom';
 import { Container, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import RecipeBasic from './RecipeBasic';
+import RecipeBasicInfo from '../../common/components/RecipeBasicInfo';
 import RecipeSteps from './RecipeSteps';
 import RecipeIngredientsInfo from './RecipeIngredientsInfo';
-import { Recipe } from '../models/recipe';
+import { Recipe } from '../../models/recipe';
 import ReviewsListView from '../reviews/ReviewsListView';
 import RecipeBasicPlaceholder from './RecipeBasicPlaceholder';
 import RecipeIngredientsInfoPlaceholder from './RecipeIngredientsInfoPlaceholder';
@@ -22,25 +21,11 @@ interface RecipeViewProps {
 }
 
 function RecipeView({ recipe }: RecipeViewProps) {
-  // if (!recipe) return null;
-  // const {
-  //   categories,
-  //   cookingTime,
-  //   description,
-  //   steps,
-  //   id,
-  //   image,
-  //   ingredients,
-  //   nutrients,
-  //   rating,
-  //   servings,
-  //   title,
-  // } = recipe;
   return (
     <StyledContainer maxWidth="md">
       {recipe ? (
         <>
-          <RecipeBasic
+          <RecipeBasicInfo
             title={recipe.title}
             description={recipe.description}
             cookingTime={recipe.cookingTime}

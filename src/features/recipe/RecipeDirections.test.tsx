@@ -1,14 +1,13 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import RecipeSteps from './RecipeSteps';
-import { Step } from '../models/recipe';
+import { Step } from '../../models/recipe';
 
 const mockSteps: Step[] = [
-  { id: '1', step: 'Bring a large pot of salted water to a boil.', order: 1 },
+  { id: '1', step: 'Bring a large pot of salted water to a boil.' },
   {
     id: '2',
     step: 'Cook pasta according to package instructions until al dente.',
-    order: 2,
   },
 ];
 

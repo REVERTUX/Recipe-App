@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { subMinutes } from 'date-fns';
 
 import ReviewItem from './ReviewItem';
-import { Review } from '../models/review';
+import { Review } from '../../models/review';
 
 const mockReview: Review = {
   id: '1',

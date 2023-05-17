@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
 import { useGetRecipesQuery } from '../services/recipes';
-import RecipesView from '../recipes/RecipesView';
-import SideBar from '../recipes/SideBar';
+import RecipesView from '../features/recipes/RecipesView';
+import SideBar from '../features/recipes/SideBar';
+
+const Wrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.down('md')]: {
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: theme.spacing(2),
+  },
+}));
 
 const ITEMS_PER_PAGE = 10;
 
@@ -39,7 +49,7 @@ function RecipesPage() {
   };
 
   return (
-    <Box display="flex">
+    <Wrapper>
       <SideBar search={search} onSearchChange={setSearch} />
       <RecipesView
         recipes={data?.data}
@@ -49,7 +59,7 @@ function RecipesPage() {
         isFetching={isFetching}
         handlePageChange={handlePageChange}
       />
-    </Box>
+    </Wrapper>
   );
 }
 
