@@ -1,7 +1,10 @@
 import { Outlet, Link } from 'react-router-dom';
-
 import { Box, AppBar, Toolbar, Typography, Container } from '@mui/material';
-import CustomNavLink, { CustomNavLinkProps } from './components/CustomNavLink';
+import AddIcon from '@mui/icons-material/Add';
+
+import CustomNavLink, {
+  CustomNavLinkProps,
+} from './common/components/CustomNavLink';
 
 const navItems: CustomNavLinkProps[] = [
   { to: '/recipes', name: 'Recipes' },
@@ -26,11 +29,19 @@ function Layout() {
                 Recipe
               </Typography>
             </Link>
-            <nav>
-              {navItems.map(({ name, to }) => (
-                <CustomNavLink key={name} to={to} name={name} />
-              ))}
-            </nav>
+            <Box component="nav" display="flex" gap="32px">
+              <div>
+                {navItems.map(({ name, to }) => (
+                  <CustomNavLink key={name} to={to} name={name} />
+                ))}
+              </div>
+              <CustomNavLink
+                to="/recipes/create"
+                name="Create Recipe"
+                variant="outlined"
+                icon={<AddIcon />}
+              />
+            </Box>
           </Toolbar>
         </AppBar>
       </Box>

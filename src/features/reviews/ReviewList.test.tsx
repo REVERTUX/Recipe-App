@@ -2,7 +2,7 @@ import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import ReviewList from './ReviewList';
-import { Review } from '../models/review';
+import { Review } from '../../models/review';
 
 const mockReviews: Review[] = [
   {

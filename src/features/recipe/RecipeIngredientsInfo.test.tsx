@@ -1,9 +1,9 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import RecipeIngredientsInfo from './RecipeIngredientsInfo';
-import { Ingredient, Nutrients } from '../models/recipe';
+import { RecipeIngredient, Nutrients } from '../../models/recipe';
 
-const mockIngredients: Ingredient[] = [
+const mockIngredients: RecipeIngredient[] = [
   { id: '1', ingredientName: 'pasta', amount: 1, ingredientUnitName: 'pound' },
   {
     id: '2',
@@ -16,9 +16,10 @@ const mockIngredients: Ingredient[] = [
     ingredientName: 'parmesan cheese',
     amount: 0.5,
     ingredientUnitName: 'cup',
+    description: 'can also be gouda',
   },
   {
-    id: '3',
+    id: '4',
     ingredientName: 'pepper',
     amount: 0,
     ingredientUnitName: 'to taste',
@@ -60,7 +61,9 @@ describe('RecipeIngredientsInfo', () => {
 
     expect(screen.getByText('pasta 1 pound')).toBeInTheDocument();
     expect(screen.getByText('pesto sauce 1 cup')).toBeInTheDocument();
-    expect(screen.getByText('parmesan cheese 0.5 cup')).toBeInTheDocument();
+    expect(
+      screen.getByText('parmesan cheese 0.5 cup can also be gouda')
+    ).toBeInTheDocument();
     expect(screen.getByText('pepper to taste')).toBeInTheDocument();
   });
 });

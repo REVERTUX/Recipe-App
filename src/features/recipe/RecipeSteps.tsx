@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { Recipe } from '../models/recipe';
+import { Recipe } from '../../models/recipe';
 
 type RecipeStepsProps = Pick<Recipe, 'steps'>;
 

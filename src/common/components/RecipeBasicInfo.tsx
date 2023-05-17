@@ -3,7 +3,7 @@ import TakeoutDiningIcon from '@mui/icons-material/TakeoutDining';
 import { Chip, Rating, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { Recipe } from '../models/recipe';
+import { Recipe } from '../../models/recipe';
 
 const TimeContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -17,19 +17,19 @@ const ServingsContainer = styled('div')(({ theme }) => ({
   gap: theme.spacing(0.5),
 }));
 
-type RecipeBasicProps = Pick<
+type RecipeBasicInfoProps = Pick<
   Recipe,
   'title' | 'description' | 'cookingTime' | 'servings' | 'rating' | 'categories'
 >;
 
-function RecipeBasic({
+function RecipeBasicInfo({
   categories,
   cookingTime,
   description,
   rating,
   servings,
   title,
-}: RecipeBasicProps) {
+}: RecipeBasicInfoProps) {
   return (
     <div>
       <Typography variant="h3">{title}</Typography>
@@ -57,4 +57,4 @@ function RecipeBasic({
   );
 }
 
-export default RecipeBasic;
+export default RecipeBasicInfo;

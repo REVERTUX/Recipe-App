@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { RecipeListView } from '../models/recipe';
-import RecipeBasic from '../recipe/RecipeBasic';
+import { RecipeListView } from '../../models/recipe';
+import RecipeBasicInfo from '../../common/components/RecipeBasicInfo';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -24,7 +24,7 @@ function RecipeListItem({ recipe }: RecipeListItemProps) {
   return (
     <Link to={`/recipes/${id}`} state={recipe}>
       <StyledPaper>
-        <RecipeBasic
+        <RecipeBasicInfo
           categories={categories}
           cookingTime={cookingTime}
           description={description}

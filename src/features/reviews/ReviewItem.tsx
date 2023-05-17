@@ -1,6 +1,6 @@
 import { Rating, Typography } from '@mui/material';
 import { formatDistanceToNow } from 'date-fns';
-import { Review } from '../models/review';
+import { Review } from '../../models/review';
 
 interface ReviewItemProps {
   review: Review;
