@@ -6,7 +6,8 @@ import RecipeItem from './RecipeListItem';
 import { RecipeListView } from '../../models/recipe';
 import RecipeBasicPlaceholder from '../recipe/RecipeBasicPlaceholder';
 
-const RecipesContainer = styled(Container)(({ theme }) => ({
+const RecipesContainer = styled('div')(({ theme }) => ({
+  width: '100%',
   display: 'flex',
   gap: theme.spacing(2),
   flexDirection: 'column',
