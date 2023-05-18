@@ -19,9 +19,13 @@ function CustomNavLink({
     <Button
       variant={variant}
       color="inherit"
+      size="large"
       component={NavLink}
       to={to}
       startIcon={icon}
+      sx={{
+        '&.active': { backgroundColor: (theme) => theme.palette.primary.light },
+      }}
     >
       {name}
     </Button>
