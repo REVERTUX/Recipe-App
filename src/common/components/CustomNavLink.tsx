@@ -21,6 +21,7 @@ function CustomNavLink({
       color="inherit"
       size="large"
       component={NavLink}
+      end
       to={to}
       startIcon={icon}
       sx={{

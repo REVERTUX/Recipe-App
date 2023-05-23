@@ -3,6 +3,7 @@ import { Typography, Skeleton } from '@mui/material';
 function RecipeBasicPlaceholder() {
   return (
     <>
+      <Skeleton variant="rectangular" height={800} />
       <Typography variant="h3">
         <Skeleton />
       </Typography>

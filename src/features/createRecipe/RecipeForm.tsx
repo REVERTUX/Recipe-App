@@ -15,6 +15,7 @@ import NutrientsForm from './NutrientsForm';
 import CategoriesForm from './CategoriesForm';
 import StepsForm from './StepsForm';
 import IngredientsForm from './IngredientsForm';
+import ImageForm from './ImageForm';
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -23,6 +24,7 @@ const validationSchema = Yup.object({
   description: Yup.string()
     .min(15, 'Must be 15 characters or more.')
     .required('Required'),
+  imageId: Yup.string().uuid().optional(),
   calories: Yup.number().min(1, 'Must be 1 or more').required('Required'),
   servings: Yup.number().min(1, 'Must be 1 or more').required('Required'),
   nutrients: Yup.object({
@@ -61,7 +63,7 @@ const validationSchema = Yup.object({
 const initialValues: CreateRecipe = {
   title: '',
   description: '',
-  image: 'placeholder',
+  imageId: undefined,
   calories: 0,
   servings: 0,
   nutrients: { carbs: 0, fat: 0, protein: 0 },
@@ -154,6 +156,7 @@ function RecipeForm({ onSubmit }: RecipeFormProps) {
               error={touched.description && Boolean(errors.description)}
               helperText={touched.description && errors.description}
             />
+            <ImageForm setFieldValue={setFieldValue} error={errors.imageId} />
             <Stack
               direction="row"
               width="100%"
