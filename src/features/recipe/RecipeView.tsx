@@ -28,6 +28,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
           <RecipeBasicInfo
             title={recipe.title}
             description={recipe.description}
+            imageId={recipe.imageId}
             cookingTime={recipe.cookingTime}
             categories={recipe.categories}
             rating={recipe.rating}

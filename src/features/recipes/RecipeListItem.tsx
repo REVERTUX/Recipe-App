@@ -19,12 +19,21 @@ interface RecipeListItemProps {
 }
 
 function RecipeListItem({ recipe }: RecipeListItemProps) {
-  const { categories, cookingTime, description, id, rating, servings, title } =
-    recipe;
+  const {
+    categories,
+    imageId,
+    cookingTime,
+    description,
+    id,
+    rating,
+    servings,
+    title,
+  } = recipe;
   return (
     <Link to={`/recipes/${id}`} state={recipe}>
       <StyledPaper>
         <RecipeBasicInfo
+          imageId={imageId}
           categories={categories}
           cookingTime={cookingTime}
           description={description}

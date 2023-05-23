@@ -17,9 +17,21 @@ const ServingsContainer = styled('div')(({ theme }) => ({
   gap: theme.spacing(0.5),
 }));
 
+const StyledImage = styled('img')({
+  width: '100%',
+  maxHeight: '852px',
+  aspectRatio: '1',
+});
+
 type RecipeBasicInfoProps = Pick<
   Recipe,
-  'title' | 'description' | 'cookingTime' | 'servings' | 'rating' | 'categories'
+  | 'title'
+  | 'description'
+  | 'imageId'
+  | 'cookingTime'
+  | 'servings'
+  | 'rating'
+  | 'categories'
 >;
 
 function RecipeBasicInfo({
@@ -29,9 +41,11 @@ function RecipeBasicInfo({
   rating,
   servings,
   title,
+  imageId,
 }: RecipeBasicInfoProps) {
   return (
     <div>
+      {imageId && <StyledImage src={`/api/files/${imageId}`} alt={title} />}
       <Typography variant="h3">{title}</Typography>
       <Typography variant="body1">{description}</Typography>
       <TimeContainer>

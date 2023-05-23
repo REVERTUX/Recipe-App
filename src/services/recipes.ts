@@ -14,7 +14,6 @@ export const recipesApi = createApi({
   reducerPath: 'recipesApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api',
-    mode: 'no-cors',
   }),
 
   tagTypes: ['Recipes', 'Categories', 'Ingredients'],
@@ -45,6 +44,7 @@ export const recipesApi = createApi({
         url: 'recipes',
         body: JSON.stringify(body),
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
       }),
       invalidatesTags: ['Recipes'],
     }),
@@ -61,6 +61,7 @@ export const recipesApi = createApi({
         url: 'recipes/ingredients',
         body: JSON.stringify(body),
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
       }),
       invalidatesTags: ['Ingredients'],
     }),
@@ -77,8 +78,17 @@ export const recipesApi = createApi({
         url: 'recipes/categories',
         body,
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
       }),
       invalidatesTags: ['Categories'],
+    }),
+    uploadFile: builder.mutation<{ id: string }, FormData>({
+      query: (body) => ({
+        url: 'files',
+        body,
+        method: 'POST',
+        formData: true,
+      }),
     }),
   }),
 });
@@ -91,4 +101,5 @@ export const {
   useGetIngredientsQuery,
   useCreateCategoryMutation,
   useCreateIngredientMutation,
+  useUploadFileMutation,
 } = recipesApi;

@@ -135,7 +135,7 @@ describe('RecipeForm', () => {
           {
             title: 'Test Recipe',
             description: 'Test recipe description with lot of letters.',
-            image: 'placeholder',
+            image: undefined,
             calories: 500,
             servings: 4,
             nutrients: { carbs: 50, fat: 20, protein: 30 },
