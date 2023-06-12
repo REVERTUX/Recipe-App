@@ -21,6 +21,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CustomNavLink, {
   CustomNavLinkProps,
 } from './common/components/CustomNavLink';
+import UserProfileMenu from './common/components/UserProfileMenu';
+import { useAppSelector } from './app/hooks';
 
 const navItems: CustomNavLinkProps[] = [
   { to: '/recipes', name: 'Recipes' },
@@ -28,10 +30,13 @@ const navItems: CustomNavLinkProps[] = [
   { to: '/categories', name: 'Categories' },
   { to: '/cuisines', name: 'Cuisines' },
 ];
-const drawerWidth = 240;
+
+const DRAWER_WIDTH = 240;
 
 function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const { user } = useAppSelector((state) => state.auth);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -65,15 +70,42 @@ function Layout() {
               <CustomNavLink key={name} to={to} name={name} />
             ))}
           </Box>
-          <Button
-            variant="contained"
-            size="large"
-            component={NavLink}
-            to="/recipes/create"
-            startIcon={<AddIcon />}
-          >
-            Create Recipe
-          </Button>
+          {user ? (
+            <div>
+              <Button
+                variant="text"
+                color="inherit"
+                size="large"
+                component={NavLink}
+                to="/recipes/create"
+                startIcon={<AddIcon />}
+              >
+                Create Recipe
+              </Button>
+              <UserProfileMenu />
+            </div>
+          ) : (
+            <div>
+              <Button
+                variant="text"
+                color="inherit"
+                size="large"
+                component={NavLink}
+                to="/sign-in"
+              >
+                Sign In
+              </Button>
+              <Button
+                variant="outlined"
+                color="inherit"
+                size="large"
+                component={NavLink}
+                to="/sign-up"
+              >
+                Sign Up
+              </Button>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       <Box component="nav">
@@ -88,7 +120,7 @@ function Layout() {
             display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
-              width: drawerWidth,
+              width: DRAWER_WIDTH,
             },
           }}
         >
