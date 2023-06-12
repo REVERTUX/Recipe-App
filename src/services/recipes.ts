@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import {
   CreateRecipe,
   Recipe,
@@ -9,12 +9,11 @@ import {
 import { ListResponse } from '../common/model';
 import { Category, CategoryListAPIParams } from '../models/category';
 import { Ingredient, IngredientListAPIParams } from '../models/ingredient';
+import baseQueryWithReauth from './queryWithReauth';
 
 export const recipesApi = createApi({
   reducerPath: 'recipesApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api',
-  }),
+  baseQuery: baseQueryWithReauth,
 
   tagTypes: ['Recipes', 'Categories', 'Ingredients'],
   endpoints: (builder) => ({

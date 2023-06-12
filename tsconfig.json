@@ -21,7 +21,7 @@
     ".eslintrc.cjs",
     "src"
   ],
-  "baseUrl": "src",
+  "baseUrl": "./src",
   "paths": {
     "src/*": ["./src/*"]
   },

@@ -1,14 +1,12 @@
 /* eslint-disable import/prefer-default-export */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { ListResponse } from '../common/model';
 import { Review, ReviewListAPIParams } from '../models/review';
+import baseQueryWithReauth from './queryWithReauth';
 
 export const reviewsApi = createApi({
   reducerPath: 'reviewsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: '/api',
-    mode: 'no-cors',
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ['Reviews'],
   endpoints: (builder) => ({
     getReview: builder.query<Review, string>({
