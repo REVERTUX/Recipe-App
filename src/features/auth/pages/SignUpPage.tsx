@@ -10,23 +10,40 @@ import {
   Link,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useSnackbar } from 'notistack';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { UserRegister } from '../../../models/user';
 import SignUpForm from '../SignUpForm';
 import { registerUser } from '../authAction';
+import { resetRegisterState } from '../authSlice';
 
 export default function SignUp() {
-  const { error, user } = useAppSelector((state) => state.auth);
+  const {
+    user,
+    register: { success, error },
+  } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
+    if (success) {
+      enqueueSnackbar(
+        'Account was registered successfully. You can now log in.',
+        {
+          variant: 'success',
+        }
+      );
+      dispatch(resetRegisterState());
+      navigate('/sign-in');
+    }
     // redirect to main page if user is authenticated
     if (user) {
       navigate('/');
     }
-  }, [navigate, user]);
+  }, [navigate, enqueueSnackbar, dispatch, success, user]);
 
   const handleSubmit = (values: UserRegister) => {
     dispatch(registerUser(values));
