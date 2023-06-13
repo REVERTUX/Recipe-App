@@ -32,33 +32,27 @@ function ProtectedRoute({
 }
 
 function App() {
-  const { user, success } = useAppSelector((state) => state.auth);
+  const { isLogged } = useAppSelector((state) => state.auth);
 
   return (
     <UserProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {success && (
-            <>
-              {/* Public routes */}
-              <Route index element={<Home />} />
-              <Route path="sign-in" element={<SignInPage />} />
-              <Route path="sign-up" element={<SignUpPage />} />
-              <Route path="recipes" element={<RecipesPage />} />
-              <Route path="recipes/:id" element={<RecipePage />} />
-              {/* Public routes */}
+          {/* Public routes */}
+          <Route index element={<Home />} />
+          <Route path="sign-in" element={<SignInPage />} />
+          <Route path="sign-up" element={<SignUpPage />} />
+          <Route path="recipes" element={<RecipesPage />} />
+          <Route path="recipes/:id" element={<RecipePage />} />
 
-              <Route element={<ProtectedRoute isAllowed={!!user} />}>
-                <Route path="recipes/create" element={<CreateRecipePage />} />
-                <Route path="favorites" element={<div>Favorites</div>} />
-                <Route path="categories" element={<div>Categories</div>} />
-                <Route path="cuisines" element={<div>Cuisines</div>} />
-
-                {/* Auth */}
-                <Route path="profile" element={<UserProfilePage />} />
-              </Route>
-            </>
-          )}
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute isAllowed={isLogged} />}>
+            <Route path="recipes/create" element={<CreateRecipePage />} />
+            <Route path="favorites" element={<div>Favorites</div>} />
+            <Route path="categories" element={<div>Categories</div>} />
+            <Route path="cuisines" element={<div>Cuisines</div>} />
+            <Route path="profile" element={<UserProfilePage />} />
+          </Route>
         </Route>
       </Routes>
     </UserProvider>
