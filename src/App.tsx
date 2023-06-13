@@ -45,12 +45,12 @@ function App() {
               <Route path="sign-in" element={<SignInPage />} />
               <Route path="sign-up" element={<SignUpPage />} />
               <Route path="recipes" element={<RecipesPage />} />
+              <Route path="recipes/:id" element={<RecipePage />} />
               {/* Public routes */}
 
               <Route element={<ProtectedRoute isAllowed={!!user} />}>
                 <Route path="recipes/create" element={<CreateRecipePage />} />
                 <Route path="favorites" element={<div>Favorites</div>} />
-                <Route path="recipes/:id" element={<RecipePage />} />
                 <Route path="categories" element={<div>Categories</div>} />
                 <Route path="cuisines" element={<div>Cuisines</div>} />
 
