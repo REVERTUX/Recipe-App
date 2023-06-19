@@ -38,6 +38,24 @@ export const recipesApi = createApi({
             ]
           : [{ type: 'Recipes', id: 'PARTIAL-LIST' }],
     }),
+    getFavoriteRecipes: builder.query<
+      ListResponse<RecipeListView>,
+      RecipeListAPIParams
+    >({
+      query: (params) => ({ url: 'recipes/favorite', params }),
+      providesTags: (result) =>
+        result
+          ? [
+              // Provides a tag for each post in the current page,
+              // as well as the 'PARTIAL-LIST' tag.
+              ...result.data.map(({ id }) => ({
+                type: 'Recipes' as const,
+                id,
+              })),
+              { type: 'Recipes', id: 'PARTIAL-LIST' },
+            ]
+          : [{ type: 'Recipes', id: 'PARTIAL-LIST' }],
+    }),
     createRecipe: builder.mutation<RecipeListView, CreateRecipe>({
       query: (body) => ({
         url: 'recipes',
@@ -101,4 +119,5 @@ export const {
   useCreateCategoryMutation,
   useCreateIngredientMutation,
   useUploadFileMutation,
+  useGetFavoriteRecipesQuery,
 } = recipesApi;
