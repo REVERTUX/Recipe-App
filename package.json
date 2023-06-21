@@ -9,8 +9,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "format": "prettier \"src/**/*.ts\" --write",
-    "lint": "eslint \"src/**/*.ts\" --fix"
+    "format": "prettier \"src/**/*.ts(x)\" --write",
+    "lint": "eslint \"src/**/*.+(ts|tsx)\" --fix"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
