@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { IconButton } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import { useUpdateRecipeFavoriteMutation } from '../../services/recipes';
@@ -36,13 +36,21 @@ function Favorite({ favorite, recipeId, disabled }: FavoriteProps) {
   };
 
   return (
-    <IconButton disabled={disabled || isLoading} onClick={handleFavoriteChange}>
-      {favorite ? (
-        <StarIcon color="warning" />
-      ) : (
-        <StarOutlineIcon color="warning" />
-      )}
-    </IconButton>
+    <Tooltip
+      title={favorite ? 'Unmark favorite' : 'Mark as favorite'}
+      placement="top"
+    >
+      <IconButton
+        disabled={disabled || isLoading}
+        onClick={handleFavoriteChange}
+      >
+        {favorite ? (
+          <StarIcon color="warning" />
+        ) : (
+          <StarOutlineIcon color="warning" />
+        )}
+      </IconButton>
+    </Tooltip>
   );
 }
 export default Favorite;
