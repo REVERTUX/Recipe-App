@@ -24,7 +24,7 @@ const StyledImage = styled('img')({
   aspectRatio: '1',
 });
 
-interface RecipeBasicInfoProps
+export interface RecipeBasicInfoProps
   extends Pick<
     RecipeListView,
     | 'id'
