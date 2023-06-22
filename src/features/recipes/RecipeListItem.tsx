@@ -28,6 +28,7 @@ function RecipeListItem({ recipe }: RecipeListItemProps) {
     rating,
     servings,
     title,
+    favorite,
   } = recipe;
   return (
     <Link to={`/recipes/${id}`} state={recipe}>
@@ -40,6 +41,9 @@ function RecipeListItem({ recipe }: RecipeListItemProps) {
           rating={rating}
           servings={servings}
           title={title}
+          favorite={favorite}
+          id={id}
+          disableFavoriteInteraction
         />
       </StyledPaper>
     </Link>

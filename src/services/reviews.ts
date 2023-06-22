@@ -14,7 +14,7 @@ export const reviewsApi = createApi({
     }),
     getReviews: builder.query<ListResponse<Review>, ReviewListAPIParams>({
       query: (params) => ({ url: 'reviews', params }),
-      providesTags: (result, error, page) =>
+      providesTags: (result) =>
         result
           ? [
               // Provides a tag for each post in the current page,

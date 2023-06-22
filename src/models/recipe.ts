@@ -11,12 +11,13 @@ export interface Recipe {
   rating: number;
   categories: RecipeCategory[];
   calories: number;
+  favorite: boolean;
 }
 
 export interface CreateRecipe
   extends Omit<
     Recipe,
-    'id' | 'rating' | 'categories' | 'steps' | 'ingredients'
+    'id' | 'rating' | 'categories' | 'steps' | 'ingredients' | 'favorite'
   > {
   categories: Omit<RecipeCategory, 'id'>[];
   steps: Omit<Step, 'id'>[];

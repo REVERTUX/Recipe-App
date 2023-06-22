@@ -33,6 +33,8 @@ function RecipeView({ recipe }: RecipeViewProps) {
             categories={recipe.categories}
             rating={recipe.rating}
             servings={recipe.servings}
+            favorite={recipe.favorite}
+            id={recipe.id}
           />
           <RecipeIngredientsInfo
             ingredients={recipe.ingredients}

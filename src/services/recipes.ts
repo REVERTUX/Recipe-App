@@ -19,7 +19,9 @@ export const recipesApi = createApi({
   endpoints: (builder) => ({
     getRecipe: builder.query<Recipe, string>({
       query: (id) => ({ url: `recipes/${id}` }),
+      providesTags: (_, __, id) => [{ type: 'Recipes', id }],
     }),
+
     getRecipes: builder.query<
       ListResponse<RecipeListView>,
       RecipeListAPIParams
@@ -38,6 +40,7 @@ export const recipesApi = createApi({
             ]
           : [{ type: 'Recipes', id: 'PARTIAL-LIST' }],
     }),
+
     getFavoriteRecipes: builder.query<
       ListResponse<RecipeListView>,
       RecipeListAPIParams
@@ -56,6 +59,7 @@ export const recipesApi = createApi({
             ]
           : [{ type: 'Recipes', id: 'PARTIAL-LIST' }],
     }),
+
     createRecipe: builder.mutation<RecipeListView, CreateRecipe>({
       query: (body) => ({
         url: 'recipes',
@@ -66,6 +70,20 @@ export const recipesApi = createApi({
       invalidatesTags: ['Recipes'],
     }),
 
+    updateRecipeFavorite: builder.mutation<
+      undefined,
+      { recipeId: string; favorite: boolean }
+    >({
+      query: ({ recipeId, favorite }) => ({
+        url: `recipes/${recipeId}/favorite`,
+        body: { favorite },
+        method: 'PUT',
+      }),
+      invalidatesTags: (_, __, { recipeId }) => [
+        { type: 'Recipes', id: recipeId },
+      ],
+    }),
+
     getIngredients: builder.query<
       ListResponse<Ingredient>,
       IngredientListAPIParams
@@ -73,6 +91,7 @@ export const recipesApi = createApi({
       query: (params) => ({ url: 'recipes/ingredients', params }),
       providesTags: ['Ingredients'],
     }),
+
     createIngredient: builder.mutation<Ingredient, Ingredient>({
       query: (body) => ({
         url: 'recipes/ingredients',
@@ -90,6 +109,7 @@ export const recipesApi = createApi({
       query: (params) => ({ url: 'recipes/categories', params }),
       providesTags: ['Categories'],
     }),
+
     createCategory: builder.mutation<Category, Category>({
       query: (body) => ({
         url: 'recipes/categories',
@@ -99,6 +119,7 @@ export const recipesApi = createApi({
       }),
       invalidatesTags: ['Categories'],
     }),
+
     uploadFile: builder.mutation<{ id: string }, FormData>({
       query: (body) => ({
         url: 'files',
@@ -120,4 +141,5 @@ export const {
   useCreateIngredientMutation,
   useUploadFileMutation,
   useGetFavoriteRecipesQuery,
+  useUpdateRecipeFavoriteMutation,
 } = recipesApi;
