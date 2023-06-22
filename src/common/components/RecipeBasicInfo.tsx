@@ -3,7 +3,8 @@ import TakeoutDiningIcon from '@mui/icons-material/TakeoutDining';
 import { Chip, Rating, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { Recipe } from '../../models/recipe';
+import { RecipeListView } from '../../models/recipe';
+import Favorite from './Favorite';
 
 const TimeContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -23,16 +24,21 @@ const StyledImage = styled('img')({
   aspectRatio: '1',
 });
 
-type RecipeBasicInfoProps = Pick<
-  Recipe,
-  | 'title'
-  | 'description'
-  | 'imageId'
-  | 'cookingTime'
-  | 'servings'
-  | 'rating'
-  | 'categories'
->;
+export interface RecipeBasicInfoProps
+  extends Pick<
+    RecipeListView,
+    | 'id'
+    | 'title'
+    | 'description'
+    | 'imageId'
+    | 'cookingTime'
+    | 'servings'
+    | 'rating'
+    | 'categories'
+    | 'favorite'
+  > {
+  disableFavoriteInteraction?: boolean;
+}
 
 function RecipeBasicInfo({
   categories,
@@ -42,11 +48,21 @@ function RecipeBasicInfo({
   servings,
   title,
   imageId,
+  favorite,
+  id,
+  disableFavoriteInteraction,
 }: RecipeBasicInfoProps) {
   return (
     <div>
       {imageId && <StyledImage src={`/api/files/${imageId}`} alt={title} />}
-      <Typography variant="h3">{title}</Typography>
+      <Stack direction="row" justifyContent="space-between">
+        <Typography variant="h3">{title}</Typography>
+        <Favorite
+          favorite={favorite}
+          recipeId={id}
+          disabled={disableFavoriteInteraction}
+        />
+      </Stack>
       <Typography variant="body1">{description}</Typography>
       <TimeContainer>
         <AccessTimeIcon />
@@ -63,8 +79,8 @@ function RecipeBasicInfo({
         <Rating value={rating} max={5} precision={0.5} readOnly />
       </Typography>
       <Stack direction="row" spacing={1}>
-        {categories.map(({ categoryName, id }) => (
-          <Chip key={id} label={categoryName} />
+        {categories.map((category) => (
+          <Chip key={category.id} label={category.categoryName} />
         ))}
       </Stack>
     </div>

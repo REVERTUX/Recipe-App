@@ -10,6 +10,7 @@ import SignUpPage from './features/auth/pages/SignUpPage';
 import UserProfilePage from './features/auth/pages/UserProfilePage';
 import { useAppSelector } from './app/hooks';
 import UserProvider from './features/auth/UserProvider';
+import FavoriteRecipesPage from './page/FavoriteRecipesPage';
 
 interface ProtectedRouteProps {
   // eslint-disable-next-line react/require-default-props
@@ -48,7 +49,7 @@ function App() {
           {/* Protected Routes */}
           <Route element={<ProtectedRoute isAllowed={isLogged} />}>
             <Route path="recipes/create" element={<CreateRecipePage />} />
-            <Route path="favorites" element={<div>Favorites</div>} />
+            <Route path="favorites" element={<FavoriteRecipesPage />} />
             <Route path="categories" element={<div>Categories</div>} />
             <Route path="cuisines" element={<div>Cuisines</div>} />
             <Route path="profile" element={<UserProfilePage />} />

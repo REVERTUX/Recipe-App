@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 
-import { useGetRecipesQuery } from '../services/recipes';
+import { useGetFavoriteRecipesQuery } from '../services/recipes';
 import RecipesView from '../features/recipes/RecipesView';
 import SideBar from '../features/recipes/SideBar';
 import useDebounce from '../utils/useDebounce';
@@ -17,13 +17,13 @@ const Wrapper = styled('div')(({ theme }) => ({
 
 const ITEMS_PER_PAGE = 10;
 
-function RecipesPage() {
+function FavoriteRecipesPage() {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>('');
 
   const searchTerm = useDebounce(search, 1000);
 
-  const { data, isFetching } = useGetRecipesQuery({
+  const { data, isFetching } = useGetFavoriteRecipesQuery({
     take: ITEMS_PER_PAGE,
     skip: page * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
     search: searchTerm,
@@ -48,4 +48,4 @@ function RecipesPage() {
   );
 }
 
-export default RecipesPage;
+export default FavoriteRecipesPage;
