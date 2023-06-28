@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
+import { useSearchParams } from 'react-router-dom';
 
 import { useGetFavoriteRecipesQuery } from '../services/recipes';
 import RecipesView from '../features/recipes/RecipesView';
 import SideBar from '../features/recipes/SideBar';
 import useDebounce from '../utils/useDebounce';
+import { getSearchParamPage, getSearchParamSearch } from '../utils/pagination';
 
 const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -18,16 +20,25 @@ const Wrapper = styled('div')(({ theme }) => ({
 const ITEMS_PER_PAGE = 10;
 
 function FavoriteRecipesPage() {
-  const [page, setPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>('');
+  const [page, setPage] = useState<number>(
+    getSearchParamPage(window.location.search, 1)
+  );
+  const [search, setSearch] = useState<string>(
+    getSearchParamSearch(window.location.search, '')
+  );
 
   const searchTerm = useDebounce(search, 1000);
+  const [, setSearchParams] = useSearchParams();
 
   const { data, isFetching } = useGetFavoriteRecipesQuery({
     take: ITEMS_PER_PAGE,
     skip: page * ITEMS_PER_PAGE - ITEMS_PER_PAGE,
     search: searchTerm,
   });
+
+  useEffect(() => {
+    setSearchParams({ page: `${page}`, search: searchTerm });
+  }, [page, searchTerm, setSearchParams]);
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
