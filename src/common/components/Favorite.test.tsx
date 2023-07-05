@@ -15,7 +15,7 @@ global.Request = Request;
 global.Response = Response;
 
 const handlers = [
-  rest.put('/api/recipes/:id/favorite', (req, res) => {
+  rest.put('/api/recipes/:id/favorite', (_, res) => {
     return res();
   }),
 ];
@@ -53,7 +53,7 @@ describe('Favorite', () => {
       </SnackbarProvider>
     );
 
-    const button = screen.getByLabelText('Mark as favorite');
+    const button = screen.getByRole('button');
     const icon = screen.getByTestId('StarOutlineIcon');
 
     expect(button).toBeInTheDocument();
@@ -69,7 +69,7 @@ describe('Favorite', () => {
       </SnackbarProvider>
     );
 
-    const button = screen.getByLabelText('Mark as favorite');
+    const button = screen.getByRole('button');
 
     expect(button).toBeInTheDocument();
 
@@ -84,7 +84,7 @@ describe('Favorite', () => {
       </SnackbarProvider>
     );
 
-    const button = screen.getByLabelText('Mark as favorite');
+    const button = screen.getByRole('button');
 
     expect(button).toHaveProperty('disabled');
   });

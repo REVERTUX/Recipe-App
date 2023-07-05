@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { IconButton, Tooltip } from '@mui/material';
@@ -13,45 +12,42 @@ interface FavoriteProps {
 }
 
 function Favorite({ favorite, recipeId, disabled }: FavoriteProps) {
-  const [updateRecipeFavorite, { isLoading, isError, isSuccess }] =
+  const [updateRecipeFavorite, { isLoading }] =
     useUpdateRecipeFavoriteMutation();
   const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => {
-    if (isSuccess) {
-      enqueueSnackbar(
-        `Recipe is ${!favorite ? 'now favorite' : 'no longer favorite'}`,
-        { variant: 'success' }
-      );
-    }
-
-    if (isError) {
-      enqueueSnackbar('Something went wrong ', { variant: 'error' });
-    }
-  }, [isError, isSuccess, enqueueSnackbar, favorite]);
-
   const handleFavoriteChange = () => {
     if (disabled || isLoading) return;
-    updateRecipeFavorite({ favorite: !favorite, recipeId });
+    updateRecipeFavorite({ favorite: !favorite, recipeId })
+      .unwrap()
+      .then(() =>
+        enqueueSnackbar(
+          `Recipe is ${!favorite ? 'now favorite' : 'no longer favorite'}`,
+          { variant: 'success' }
+        )
+      )
+      .catch(() => {
+        enqueueSnackbar('Something went wrong ', { variant: 'error' });
+      });
   };
 
   return (
     <Tooltip
-      title={!disabled ? favorite ? 'Unmark favorite' : 'Mark as favorite' : null}
+      title={!disabled && (favorite ? 'Unmark favorite' : 'Mark as favorite')}
       placement="top"
       disableInteractive={disabled}
     >
-    <span>
-      <IconButton
-        disabled={disabled || isLoading}
-        onClick={handleFavoriteChange}
-      >
-        {favorite ? (
-          <StarIcon color="warning" />
-        ) : (
-          <StarOutlineIcon color="warning" />
-        )}
-      </IconButton>
+      <span>
+        <IconButton
+          disabled={disabled || isLoading}
+          onClick={handleFavoriteChange}
+        >
+          {favorite ? (
+            <StarIcon color="warning" />
+          ) : (
+            <StarOutlineIcon color="warning" />
+          )}
+        </IconButton>
       </span>
     </Tooltip>
   );

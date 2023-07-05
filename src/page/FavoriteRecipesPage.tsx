@@ -7,7 +7,7 @@ import SideBar from '../features/recipes/SideBar';
 import useDebounce from '../utils/useDebounce';
 import { getSearchParamPage, getSearchParamSearch } from '../utils/pagination';
 
-const RecipesView = lazy(() => import('../features/recipes/RecipesView'))
+const RecipesView = lazy(() => import('../features/recipes/RecipesView'));
 
 const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -47,16 +47,16 @@ function FavoriteRecipesPage() {
 
   return (
     <Wrapper>
-    <Suspense>
-      <SideBar search={search} onSearchChange={setSearch} />
-      <RecipesView
-        recipes={data?.data}
-        count={data?.count}
-        itemsPerPage={ITEMS_PER_PAGE}
-        page={page}
-        isFetching={isFetching}
-        handlePageChange={handlePageChange}
-      />
+      <Suspense>
+        <SideBar search={search} onSearchChange={setSearch} />
+        <RecipesView
+          recipes={data?.data}
+          count={data?.count}
+          itemsPerPage={ITEMS_PER_PAGE}
+          page={page}
+          isFetching={isFetching}
+          handlePageChange={handlePageChange}
+        />
       </Suspense>
     </Wrapper>
   );
