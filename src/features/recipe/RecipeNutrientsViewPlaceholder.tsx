@@ -6,19 +6,9 @@ const StyledList = styled('ul')(({ theme }) => ({
   margin: '0',
 }));
 
-function RecipeIngredientsInfoPlaceholder() {
+function RecipeNutrientsViewPlaceholder() {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-      <div>
-        <Typography variant="h5">
-          <Skeleton />
-        </Typography>
-        <StyledList>
-          {[1, 2, 3, 4, 5].map((idx) => (
-            <Skeleton key={idx} width="200px" />
-          ))}
-        </StyledList>
-      </div>
+    <Box sx={{ display: 'flex' }}>
       <div>
         <Typography variant="h5">
           <Skeleton />
@@ -33,4 +23,4 @@ function RecipeIngredientsInfoPlaceholder() {
   );
 }
 
-export default RecipeIngredientsInfoPlaceholder;
+export default RecipeNutrientsViewPlaceholder;
