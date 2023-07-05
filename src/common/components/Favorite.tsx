@@ -37,9 +37,11 @@ function Favorite({ favorite, recipeId, disabled }: FavoriteProps) {
 
   return (
     <Tooltip
-      title={favorite ? 'Unmark favorite' : 'Mark as favorite'}
+      title={!disabled ? favorite ? 'Unmark favorite' : 'Mark as favorite' : null}
       placement="top"
+      disableInteractive={disabled}
     >
+    <span>
       <IconButton
         disabled={disabled || isLoading}
         onClick={handleFavoriteChange}
@@ -50,6 +52,7 @@ function Favorite({ favorite, recipeId, disabled }: FavoriteProps) {
           <StarOutlineIcon color="warning" />
         )}
       </IconButton>
+      </span>
     </Tooltip>
   );
 }

@@ -27,7 +27,7 @@ function RecipesPage() {
   const [search, setSearch] = useState<string>(
     getSearchParamSearch(window.location.search, '')
   );
-  const [, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams({search, page: page + ''});
 
   const searchTerm = useDebounce(search, 1000);
 
@@ -38,7 +38,7 @@ function RecipesPage() {
   });
 
   useEffect(() => {
-    setSearchParams({ page: `${page}`, search: searchTerm });
+    setSearchParams({ page: `${page}`, search: searchTerm }, {replace: true});
   }, [page, searchTerm, setSearchParams]);
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
