@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { styled } from '@mui/material/styles';
 import { useSearchParams } from 'react-router-dom';
 
 import { useGetFavoriteRecipesQuery } from '../services/recipes';
-import RecipesView from '../features/recipes/RecipesView';
 import SideBar from '../features/recipes/SideBar';
 import useDebounce from '../utils/useDebounce';
 import { getSearchParamPage, getSearchParamSearch } from '../utils/pagination';
+
+const RecipesView = lazy(() => import('../features/recipes/RecipesView'))
 
 const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -46,6 +47,7 @@ function FavoriteRecipesPage() {
 
   return (
     <Wrapper>
+    <Suspense>
       <SideBar search={search} onSearchChange={setSearch} />
       <RecipesView
         recipes={data?.data}
@@ -55,6 +57,7 @@ function FavoriteRecipesPage() {
         isFetching={isFetching}
         handlePageChange={handlePageChange}
       />
+      </Suspense>
     </Wrapper>
   );
 }

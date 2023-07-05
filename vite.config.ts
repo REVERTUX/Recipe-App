@@ -2,12 +2,22 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 
-import { defineConfig } from 'vite';
+import { defineConfig, PluginOption } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import { visualizer } from "rollup-plugin-visualizer"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+      react(),
+      visualizer({
+         template: "treemap", // or sunburst
+         open: true,
+         gzipSize: true,
+         brotliSize: true,
+         filename: "analyse.html", // will be saved in project's root
+       }) as PluginOption,
+  ],
   test: {
     globals: true,
     environment: 'jsdom',

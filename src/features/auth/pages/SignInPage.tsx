@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {
@@ -11,10 +11,11 @@ import {
   Alert,
 } from '@mui/material';
 
-import SignInForm from '../SignInForm';
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
 import { UserSignIn } from '../../../models/user';
 import { loginUser } from '../authAction';
+
+const SignInForm = lazy(() => import('../SignInForm'))
 
 function SignInPage() {
   const { error, user } = useAppSelector((state) => state.auth);
@@ -34,6 +35,7 @@ function SignInPage() {
 
   return (
     <Container maxWidth="xs">
+    <Suspense>
       <Box
         sx={{
           marginTop: 8,
@@ -65,6 +67,7 @@ function SignInPage() {
           </Grid>
         </Grid>
       </Box>
+      </Suspense>
     </Container>
   );
 }

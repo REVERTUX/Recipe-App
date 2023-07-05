@@ -1,6 +1,8 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import RecipeView from '../features/recipe/RecipeView';
 import { useGetRecipeQuery, useGetRecipeStepsQuery } from '../services/recipes';
+
+const RecipeView = lazy(() => import('../features/recipe/RecipeView'))
 
 function RecipePage() {
   const { id } = useParams();
@@ -9,7 +11,9 @@ function RecipePage() {
   const { data: steps } = useGetRecipeStepsQuery(id!, { skip: !id });
 
   if (!id || isError) return <Navigate to="/recipes" />;
-  return <RecipeView recipe={data} steps={steps} />;
+  return <Suspense>
+  <RecipeView recipe={data} steps={steps} />
+  </Suspense>
 }
 
 export default RecipePage;
