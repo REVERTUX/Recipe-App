@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -14,9 +14,10 @@ import { useSnackbar } from 'notistack';
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { UserRegister } from '../../../models/user';
-import SignUpForm from '../SignUpForm';
 import { registerUser } from '../authAction';
 import { resetRegisterState } from '../authSlice';
+
+const SignUpForm = lazy(() => import('../SignUpForm'))
 
 export default function SignUp() {
   const {
@@ -51,6 +52,7 @@ export default function SignUp() {
 
   return (
     <Container maxWidth="xs">
+    <Suspense>
       <Box
         sx={{
           marginTop: 8,
@@ -77,6 +79,7 @@ export default function SignUp() {
           </Grid>
         </Grid>
       </Box>
+      </Suspense>
     </Container>
   );
 }
