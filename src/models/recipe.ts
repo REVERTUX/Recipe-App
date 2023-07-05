@@ -3,8 +3,6 @@ export interface Recipe {
   title: string;
   description: string;
   imageId?: string;
-  ingredients: RecipeIngredient[];
-  steps: Step[];
   cookingTime: CookingTime;
   servings: number;
   nutrients: Nutrients;
@@ -15,28 +13,14 @@ export interface Recipe {
 }
 
 export interface CreateRecipe
-  extends Omit<
-    Recipe,
-    'id' | 'rating' | 'categories' | 'steps' | 'ingredients' | 'favorite'
-  > {
+  extends Omit<Recipe, 'id' | 'rating' | 'categories' | 'favorite'> {
   categories: Omit<RecipeCategory, 'id'>[];
-  steps: Omit<Step, 'id'>[];
-  ingredients: CreateRecipeIngredient[];
+  steps: RecipeSteps;
 }
-
-export type CreateRecipeIngredient = Omit<RecipeIngredient, 'id'>;
 
 export interface CookingTime {
   value: number;
   unit: string;
-}
-
-export interface RecipeIngredient {
-  id: string;
-  ingredientName: string;
-  ingredientUnitName: string;
-  amount: number;
-  description?: string;
 }
 
 export interface Nutrients {
@@ -50,12 +34,12 @@ export interface RecipeCategory {
   categoryName: string;
 }
 
-export interface Step {
-  id: string;
-  step: string;
+export interface RecipeSteps {
+  blocks: { type: string; data: object }[];
+  version?: string;
 }
 
-export type RecipeListView = Omit<Recipe, 'steps' | 'reviews' | 'ingredients'>;
+export type RecipeListView = Recipe;
 
 export interface RecipeListAPIParams {
   search?: string;

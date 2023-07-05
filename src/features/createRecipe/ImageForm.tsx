@@ -8,8 +8,8 @@ import { useUploadFileMutation } from '../../services/recipes';
 const Wrapper = styled('div')(({ theme }) => ({
   width: '100%',
   minHeight: '200px',
-  background: theme.palette.grey[300],
-  border: `2px dashed ${blue[400]}`,
+  background: theme.palette.grey[100],
+  border: `2px dashed ${blue[200]}`,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

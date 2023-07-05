@@ -5,21 +5,26 @@ import {
   Recipe,
   RecipeListAPIParams,
   RecipeListView,
+  RecipeSteps,
 } from '../models/recipe';
 import { ListResponse } from '../common/model';
 import { Category, CategoryListAPIParams } from '../models/category';
-import { Ingredient, IngredientListAPIParams } from '../models/ingredient';
 import baseQueryWithReauth from './queryWithReauth';
 
 export const recipesApi = createApi({
   reducerPath: 'recipesApi',
   baseQuery: baseQueryWithReauth,
 
-  tagTypes: ['Recipes', 'Categories', 'Ingredients'],
+  tagTypes: ['Recipes', 'Categories', 'RecipeSteps'],
   endpoints: (builder) => ({
     getRecipe: builder.query<Recipe, string>({
       query: (id) => ({ url: `recipes/${id}` }),
       providesTags: (_, __, id) => [{ type: 'Recipes', id }],
+    }),
+
+    getRecipeSteps: builder.query<RecipeSteps, string>({
+      query: (id) => ({ url: `recipes/${id}/steps` }),
+      providesTags: (_, __, id) => [{ type: 'RecipeSteps', id }],
     }),
 
     getRecipes: builder.query<
@@ -84,24 +89,6 @@ export const recipesApi = createApi({
       ],
     }),
 
-    getIngredients: builder.query<
-      ListResponse<Ingredient>,
-      IngredientListAPIParams
-    >({
-      query: (params) => ({ url: 'recipes/ingredients', params }),
-      providesTags: ['Ingredients'],
-    }),
-
-    createIngredient: builder.mutation<Ingredient, Ingredient>({
-      query: (body) => ({
-        url: 'recipes/ingredients',
-        body: JSON.stringify(body),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      }),
-      invalidatesTags: ['Ingredients'],
-    }),
-
     getCategories: builder.query<
       ListResponse<Category>,
       CategoryListAPIParams | undefined
@@ -136,10 +123,9 @@ export const {
   useGetRecipeQuery,
   useCreateRecipeMutation,
   useGetCategoriesQuery,
-  useGetIngredientsQuery,
   useCreateCategoryMutation,
-  useCreateIngredientMutation,
   useUploadFileMutation,
   useGetFavoriteRecipesQuery,
   useUpdateRecipeFavoriteMutation,
+  useGetRecipeStepsQuery,
 } = recipesApi;

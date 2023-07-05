@@ -2,12 +2,12 @@ import { Container, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import RecipeBasicInfo from '../../common/components/RecipeBasicInfo';
-import RecipeSteps from './RecipeSteps';
-import RecipeIngredientsInfo from './RecipeIngredientsInfo';
-import { Recipe } from '../../models/recipe';
+import RecipeStepsView from './RecipeStepsView';
+import { Recipe, RecipeSteps } from '../../models/recipe';
 import ReviewsListView from '../reviews/ReviewsListView';
 import RecipeBasicPlaceholder from './RecipeBasicPlaceholder';
-import RecipeIngredientsInfoPlaceholder from './RecipeIngredientsInfoPlaceholder';
+import RecipeNutrientsView from './RecipeNutrientsView';
+import RecipeNutrientsViewPlaceholder from './RecipeNutrientsViewPlaceholder';
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
@@ -18,9 +18,10 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 
 interface RecipeViewProps {
   recipe: Recipe | undefined;
+  steps: RecipeSteps | undefined;
 }
 
-function RecipeView({ recipe }: RecipeViewProps) {
+function RecipeView({ recipe, steps }: RecipeViewProps) {
   return (
     <StyledContainer maxWidth="md">
       {recipe ? (
@@ -36,11 +37,8 @@ function RecipeView({ recipe }: RecipeViewProps) {
             favorite={recipe.favorite}
             id={recipe.id}
           />
-          <RecipeIngredientsInfo
-            ingredients={recipe.ingredients}
-            nutrients={recipe.nutrients}
-          />
-          <RecipeSteps steps={recipe.steps} />
+          <RecipeNutrientsView nutrients={recipe.nutrients} />
+          {steps && <RecipeStepsView steps={steps} />}
           <ReviewsListView recipeId={recipe.id} />
         </>
       ) : (
@@ -48,7 +46,7 @@ function RecipeView({ recipe }: RecipeViewProps) {
           <div>
             <RecipeBasicPlaceholder />
           </div>
-          <RecipeIngredientsInfoPlaceholder />
+          <RecipeNutrientsViewPlaceholder />
           <div>
             <Typography variant="h5">
               <Skeleton />
