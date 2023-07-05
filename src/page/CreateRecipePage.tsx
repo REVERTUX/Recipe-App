@@ -4,7 +4,7 @@ import { Container } from '@mui/material';
 import { CreateRecipe } from '../models/recipe';
 import { useCreateRecipeMutation } from '../services/recipes';
 
-const RecipeForm = lazy(() => import('../features/createRecipe/RecipeForm'))
+const RecipeForm = lazy(() => import('../features/createRecipe/RecipeForm'));
 
 function CreateRecipePage() {
   const [createRecipe] = useCreateRecipeMutation();
@@ -26,8 +26,8 @@ function CreateRecipePage() {
 
   return (
     <Container sx={{ px: { xs: 0.5 } }}>
-    <Suspense>
-      <RecipeForm onSubmit={handleFormSubmit} />
+      <Suspense>
+        <RecipeForm onSubmit={handleFormSubmit} />
       </Suspense>
     </Container>
   );

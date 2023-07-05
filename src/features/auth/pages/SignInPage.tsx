@@ -15,7 +15,7 @@ import { useAppSelector, useAppDispatch } from '../../../app/hooks';
 import { UserSignIn } from '../../../models/user';
 import { loginUser } from '../authAction';
 
-const SignInForm = lazy(() => import('../SignInForm'))
+const SignInForm = lazy(() => import('../SignInForm'));
 
 function SignInPage() {
   const { error, user } = useAppSelector((state) => state.auth);
@@ -35,38 +35,42 @@ function SignInPage() {
 
   return (
     <Container maxWidth="xs">
-    <Suspense>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <SignInForm onSubmit={handleSubmit} error={error} />
-        <Box width="100%" pt={1} pb={1}>
-          {error && <Alert severity="error">{error}</Alert>}
+      <Suspense>
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <SignInForm onSubmit={handleSubmit} error={error} />
+          <Box width="100%" pt={1} pb={1}>
+            {error && <Alert severity="error">{error}</Alert>}
+          </Box>
+          <Grid container>
+            <Grid item xs>
+              <Link
+                component={RouterLink}
+                to="/forgot-password"
+                variant="body2"
+              >
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link component={RouterLink} to="/sign-up" variant="body2">
+                Don&apos;t have an account? Sign Up
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
-        <Grid container>
-          <Grid item xs>
-            <Link component={RouterLink} to="/forgot-password" variant="body2">
-              Forgot password?
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link component={RouterLink} to="/sign-up" variant="body2">
-              Don&apos;t have an account? Sign Up
-            </Link>
-          </Grid>
-        </Grid>
-      </Box>
       </Suspense>
     </Container>
   );

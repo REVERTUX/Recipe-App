@@ -19,7 +19,11 @@ describe.skip('RecipeStepsEditor', () => {
 
     it('should render text', async () => {
       renderWithProviders(
-        <RecipeStepsEditor steps={mockSteps} onChange={onChangeMock} error={false} />
+        <RecipeStepsEditor
+          steps={mockSteps}
+          onChange={onChangeMock}
+          error={false}
+        />
       );
 
       expect(
@@ -40,7 +44,11 @@ describe.skip('RecipeStepsEditor', () => {
 
     it('should not render any text', async () => {
       const { container } = renderWithProviders(
-        <RecipeStepsEditor steps={mockSteps} onChange={onChangeMock} error={false} />
+        <RecipeStepsEditor
+          steps={mockSteps}
+          onChange={onChangeMock}
+          error={false}
+        />
       );
 
       expect(container).toHaveTextContent('');

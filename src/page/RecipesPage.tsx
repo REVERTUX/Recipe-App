@@ -7,7 +7,7 @@ import SideBar from '../features/recipes/SideBar';
 import useDebounce from '../utils/useDebounce';
 import { getSearchParamPage, getSearchParamSearch } from '../utils/pagination';
 
-const RecipesView = lazy(() => import('../features/recipes/RecipesView'))
+const RecipesView = lazy(() => import('../features/recipes/RecipesView'));
 
 const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -27,7 +27,7 @@ function RecipesPage() {
   const [search, setSearch] = useState<string>(
     getSearchParamSearch(window.location.search, '')
   );
-  const [, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams({ search, page: `${page}` });
 
   const searchTerm = useDebounce(search, 1000);
 
@@ -38,7 +38,7 @@ function RecipesPage() {
   });
 
   useEffect(() => {
-    setSearchParams({ page: `${page}`, search: searchTerm });
+    setSearchParams({ page: `${page}`, search: searchTerm }, { replace: true });
   }, [page, searchTerm, setSearchParams]);
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
@@ -47,16 +47,16 @@ function RecipesPage() {
 
   return (
     <Wrapper>
-    <Suspense>
-      <SideBar search={search} onSearchChange={setSearch} />
-      <RecipesView
-        recipes={data?.data}
-        count={data?.count}
-        itemsPerPage={ITEMS_PER_PAGE}
-        page={page}
-        isFetching={isFetching}
-        handlePageChange={handlePageChange}
-      />
+      <Suspense>
+        <SideBar search={search} onSearchChange={setSearch} />
+        <RecipesView
+          recipes={data?.data}
+          count={data?.count}
+          itemsPerPage={ITEMS_PER_PAGE}
+          page={page}
+          isFetching={isFetching}
+          handlePageChange={handlePageChange}
+        />
       </Suspense>
     </Wrapper>
   );
