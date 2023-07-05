@@ -12,7 +12,7 @@ import { RecipeSteps } from '../../models/recipe';
 interface RecipeStepsEditorProps {
   steps: RecipeSteps;
   onChange: (value: RecipeSteps) => void;
-  error: boolean
+  error: boolean;
 }
 
 function RecipeStepsEditor({ steps, onChange, error }: RecipeStepsEditorProps) {
@@ -41,7 +41,7 @@ function RecipeStepsEditor({ steps, onChange, error }: RecipeStepsEditorProps) {
 
     const editor = new EditorJS({
       holder: 'editorjs',
-      data: steps, 
+      data: steps,
       placeholder: 'Write recipe content...',
       onReady: () => {
         ejInstance.current = editor;
@@ -83,9 +83,16 @@ function RecipeStepsEditor({ steps, onChange, error }: RecipeStepsEditorProps) {
   }, []);
 
   return (
-    <Paper elevation={1} sx={{ width: '100%', pt: 8, pb: 1.5, borderRadius: 4 }}>
+    <Paper
+      elevation={1}
+      sx={{ width: '100%', pt: 8, pb: 1.5, borderRadius: 4 }}
+    >
       <div id="editorjs" />
-      {error && <Typography variant='caption' color='red' pl={3}>Please type some text here</Typography>}
+      {error && (
+        <Typography variant="caption" color="red" pl={3}>
+          Please type some text here
+        </Typography>
+      )}
     </Paper>
   );
 }
