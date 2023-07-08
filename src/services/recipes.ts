@@ -75,6 +75,19 @@ export const recipesApi = createApi({
       invalidatesTags: ['Recipes'],
     }),
 
+    updateRecipe: builder.mutation<
+      RecipeListView,
+      { recipe: CreateRecipe; recipeId: string }
+    >({
+      query: ({ recipe, recipeId }) => ({
+        url: `recipes/${recipeId}`,
+        body: JSON.stringify(recipe),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }),
+      invalidatesTags: ['Recipes'],
+    }),
+
     updateRecipeFavorite: builder.mutation<
       undefined,
       { recipeId: string; favorite: boolean }
@@ -128,4 +141,5 @@ export const {
   useGetFavoriteRecipesQuery,
   useUpdateRecipeFavoriteMutation,
   useGetRecipeStepsQuery,
+  useUpdateRecipeMutation,
 } = recipesApi;

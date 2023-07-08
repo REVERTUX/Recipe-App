@@ -1,29 +1,26 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { lazy, Suspense } from 'react';
 import { Container } from '@mui/material';
-
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { FormikHelpers } from 'formik';
+
 import { CreateRecipe } from '../models/recipe';
-import { useCreateRecipeMutation } from '../services/recipes';
+import {
+  useGetRecipeQuery,
+  useGetRecipeStepsQuery,
+  useUpdateRecipeMutation,
+} from '../services/recipes';
 import Loader from '../common/components/Loader';
 
 const RecipeForm = lazy(() => import('../features/createRecipe/RecipeForm'));
 
-const initialValues: CreateRecipe = {
-  title: '',
-  description: '',
-  imageId: undefined,
-  calories: 0,
-  servings: 0,
-  nutrients: { carbs: 0, fat: 0, protein: 0 },
-  cookingTime: { value: 0, unit: 'h' },
-  categories: [],
-  steps: { blocks: [] },
-};
+function EditRecipePage() {
+  const [updateRecipe] = useUpdateRecipeMutation();
+  const { id } = useParams();
 
-function CreateRecipePage() {
-  const [createRecipe] = useCreateRecipeMutation();
+  const { data: recipe } = useGetRecipeQuery(id!, { skip: !id });
+  const { data: recipeSteps } = useGetRecipeStepsQuery(id!, { skip: !id });
 
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
@@ -32,13 +29,15 @@ function CreateRecipePage() {
     values: CreateRecipe,
     helpers: FormikHelpers<CreateRecipe>
   ) => {
-    createRecipe(values)
+    if (!id) return;
+
+    updateRecipe({ recipe: values, recipeId: id })
       .unwrap()
-      .then((recipe) => {
+      .then((data) => {
         enqueueSnackbar('Recipe was successfully created.', {
           variant: 'success',
         });
-        navigate(`/recipes/${recipe.id}`, { state: { recipe } });
+        navigate(`/recipes/${data.id}`);
       })
       .catch(() => {
         enqueueSnackbar(
@@ -51,13 +50,18 @@ function CreateRecipePage() {
       });
   };
 
+  if (!recipe || !recipeSteps) return null;
+
   return (
     <Container sx={{ px: { xs: 0.5 } }}>
       <Suspense fallback={<Loader />}>
-        <RecipeForm onSubmit={handleFormSubmit} initialValues={initialValues} />
+        <RecipeForm
+          onSubmit={handleFormSubmit}
+          initialValues={{ ...recipe, steps: recipeSteps }}
+        />
       </Suspense>
     </Container>
   );
 }
 
-export default CreateRecipePage;
+export default EditRecipePage;

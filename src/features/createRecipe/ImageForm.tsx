@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { blue, red } from '@mui/material/colors';
 import { FormikErrors } from 'formik';
 import { Typography } from '@mui/material';
+
 import { useUploadFileMutation } from '../../services/recipes';
 
 const Wrapper = styled('div')(({ theme }) => ({
@@ -32,9 +33,10 @@ const acceptedFiletypes = ['image/jpeg', 'image/jpg', 'image/png'];
 interface ImageFormProps {
   setFieldValue: (field: string, value: string) => void;
   error: FormikErrors<string> | undefined;
+  imageId?: string;
 }
 
-function ImageForm({ error, setFieldValue }: ImageFormProps) {
+function ImageForm({ error, setFieldValue, imageId }: ImageFormProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadFile, { isLoading }] = useUploadFileMutation();
 
@@ -102,6 +104,21 @@ function ImageForm({ error, setFieldValue }: ImageFormProps) {
     inputRef.current?.click();
   };
 
+  const renderImage = () => {
+    if (selectedFile) {
+      if (isLoading) {
+        return <p>Uploading...</p>;
+      }
+      return <StyledImage ref={imageRef} src="#" alt="Uploaded image" />;
+    }
+
+    if (imageId) {
+      return <StyledImage src={`/api/files/${imageId}`} alt="Uploaded image" />;
+    }
+
+    return <p>Drag and Drop image or Click Here</p>;
+  };
+
   return (
     <Wrapper
       ref={dropAreaRef}
@@ -117,14 +134,7 @@ function ImageForm({ error, setFieldValue }: ImageFormProps) {
         onChange={handleInputChange}
         hidden
       />
-      {selectedFile ? (
-        <>
-          {!isLoading && <StyledImage ref={imageRef} src="#" alt="Uploaded" />}
-          {isLoading && <p>Uploading...</p>}
-        </>
-      ) : (
-        <p>Drag and Drop image or Click Here</p>
-      )}
+      {renderImage()}
       {error && <Typography>{error}</Typography>}
     </Wrapper>
   );

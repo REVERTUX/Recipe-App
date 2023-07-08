@@ -6,6 +6,7 @@ import { useGetFavoriteRecipesQuery } from '../services/recipes';
 import SideBar from '../features/recipes/SideBar';
 import useDebounce from '../utils/useDebounce';
 import { getSearchParamPage, getSearchParamSearch } from '../utils/pagination';
+import Loader from '../common/components/Loader';
 
 const RecipesView = lazy(() => import('../features/recipes/RecipesView'));
 
@@ -47,7 +48,7 @@ function FavoriteRecipesPage() {
 
   return (
     <Wrapper>
-      <Suspense>
+      <Suspense fallback={<Loader />}>
         <SideBar search={search} onSearchChange={setSearch} />
         <RecipesView
           recipes={data?.data}

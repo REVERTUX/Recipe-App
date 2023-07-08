@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { UserRegister } from '../../../models/user';
 import { registerUser } from '../authAction';
 import { resetRegisterState } from '../authSlice';
+import Loader from '../../../common/components/Loader';
 
 const SignUpForm = lazy(() => import('../SignUpForm'));
 
@@ -52,7 +53,7 @@ export default function SignUp() {
 
   return (
     <Container maxWidth="xs">
-      <Suspense>
+      <Suspense fallback={<Loader />}>
         <Box
           sx={{
             marginTop: 8,

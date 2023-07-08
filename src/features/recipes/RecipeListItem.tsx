@@ -31,7 +31,7 @@ function RecipeListItem({ recipe }: RecipeListItemProps) {
     favorite,
   } = recipe;
   return (
-    <Link to={`/recipes/${id}`} state={recipe}>
+    <Link to={`/recipes/${id}`} state={{ recipe }}>
       <StyledPaper>
         <RecipeBasicInfo
           imageId={imageId}

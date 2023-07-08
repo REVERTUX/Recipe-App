@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { useAppSelector } from '../../../app/hooks';
+import Loader from '../../../common/components/Loader';
 
 const UserProfileCard = lazy(() => import('../UserProfileCard'));
 
@@ -8,7 +9,7 @@ function UserProfilePage() {
   if (!user) return null;
 
   return (
-    <Suspense>
+    <Suspense fallback={<Loader height="400px" />}>
       <UserProfileCard user={user} />
     </Suspense>
   );

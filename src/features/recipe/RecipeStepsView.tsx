@@ -11,6 +11,9 @@ const StyledDiv = styled('div')({
   '* > .ce-block__content': {
     maxWidth: '100% !important',
   },
+  '* > .codex-editor__redactor': {
+    paddingBottom: '0px !important',
+  },
 });
 
 interface RecipeStepsProps {
