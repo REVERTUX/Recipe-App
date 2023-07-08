@@ -82,7 +82,7 @@ export const recipesApi = createApi({
       query: ({ recipe, recipeId }) => ({
         url: `recipes/${recipeId}`,
         body: JSON.stringify(recipe),
-        method: 'POST',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
       }),
       invalidatesTags: ['Recipes'],
