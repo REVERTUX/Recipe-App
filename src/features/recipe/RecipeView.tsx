@@ -1,13 +1,17 @@
+import { lazy, Suspense } from 'react';
 import { Container, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import RecipeBasicInfo from '../../common/components/RecipeBasicInfo';
-import RecipeStepsView from './RecipeStepsView';
 import { Recipe, RecipeSteps } from '../../models/recipe';
 import ReviewsListView from '../reviews/ReviewsListView';
 import RecipeBasicPlaceholder from './RecipeBasicPlaceholder';
 import RecipeNutrientsView from './RecipeNutrientsView';
 import RecipeNutrientsViewPlaceholder from './RecipeNutrientsViewPlaceholder';
+import EditRecipeButton from './EditRecipeButton';
+import Loader from '../../common/components/Loader';
+
+const RecipeStepsView = lazy(() => import('./RecipeStepsView'));
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
@@ -26,6 +30,7 @@ function RecipeView({ recipe, steps }: RecipeViewProps) {
     <StyledContainer maxWidth="md">
       {recipe ? (
         <>
+          <EditRecipeButton recipe={recipe} steps={steps} />
           <RecipeBasicInfo
             title={recipe.title}
             description={recipe.description}
@@ -38,7 +43,11 @@ function RecipeView({ recipe, steps }: RecipeViewProps) {
             id={recipe.id}
           />
           <RecipeNutrientsView nutrients={recipe.nutrients} />
-          {steps && <RecipeStepsView steps={steps} />}
+          {steps && (
+            <Suspense fallback={<Loader />}>
+              <RecipeStepsView steps={steps} />
+            </Suspense>
+          )}
           <ReviewsListView recipeId={recipe.id} />
         </>
       ) : (

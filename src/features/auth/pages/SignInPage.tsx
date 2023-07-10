@@ -14,6 +14,7 @@ import {
 import { useAppSelector, useAppDispatch } from '../../../app/hooks';
 import { UserSignIn } from '../../../models/user';
 import { loginUser } from '../authAction';
+import Loader from '../../../common/components/Loader';
 
 const SignInForm = lazy(() => import('../SignInForm'));
 
@@ -35,7 +36,7 @@ function SignInPage() {
 
   return (
     <Container maxWidth="xs">
-      <Suspense>
+      <Suspense fallback={<Loader />}>
         <Box
           sx={{
             marginTop: 8,

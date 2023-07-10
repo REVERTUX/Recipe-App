@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 
@@ -15,11 +14,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
-          <SnackbarProvider>
-            <App />
-          </SnackbarProvider>
-        </BrowserRouter>
+        <SnackbarProvider>
+          <App />
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

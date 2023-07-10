@@ -1,4 +1,11 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import {
+  Route,
+  Navigate,
+  Outlet,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from 'react-router-dom';
 
 import Home from './features/home';
 import Layout from './Layout';
@@ -11,6 +18,7 @@ import UserProfilePage from './features/auth/pages/UserProfilePage';
 import { useAppSelector } from './app/hooks';
 import UserProvider from './features/auth/UserProvider';
 import FavoriteRecipesPage from './page/FavoriteRecipesPage';
+import EditRecipePage from './page/EditRecipePage';
 
 interface ProtectedRouteProps {
   // eslint-disable-next-line react/require-default-props
@@ -35,27 +43,32 @@ function ProtectedRoute({
 function App() {
   const { isLogged } = useAppSelector((state) => state.auth);
 
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Layout />}>
+        {/* Public routes */}
+        <Route index element={<Home />} />
+        <Route path="sign-in" element={<SignInPage />} />
+        <Route path="sign-up" element={<SignUpPage />} />
+        <Route path="recipes" element={<RecipesPage />} />
+        <Route path="recipes/:id" element={<RecipePage />} />
+
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute isAllowed={isLogged} />}>
+          <Route path="recipes/:id/edit" element={<EditRecipePage />} />
+          <Route path="recipes/create" element={<CreateRecipePage />} />
+          <Route path="favorites" element={<FavoriteRecipesPage />} />
+          <Route path="categories" element={<div>Categories</div>} />
+          <Route path="cuisines" element={<div>Cuisines</div>} />
+          <Route path="profile" element={<UserProfilePage />} />
+        </Route>
+      </Route>
+    )
+  );
+
   return (
     <UserProvider>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* Public routes */}
-          <Route index element={<Home />} />
-          <Route path="sign-in" element={<SignInPage />} />
-          <Route path="sign-up" element={<SignUpPage />} />
-          <Route path="recipes" element={<RecipesPage />} />
-          <Route path="recipes/:id" element={<RecipePage />} />
-
-          {/* Protected Routes */}
-          <Route element={<ProtectedRoute isAllowed={isLogged} />}>
-            <Route path="recipes/create" element={<CreateRecipePage />} />
-            <Route path="favorites" element={<FavoriteRecipesPage />} />
-            <Route path="categories" element={<div>Categories</div>} />
-            <Route path="cuisines" element={<div>Cuisines</div>} />
-            <Route path="profile" element={<UserProfilePage />} />
-          </Route>
-        </Route>
-      </Routes>
+      <RouterProvider router={router} />
     </UserProvider>
   );
 }

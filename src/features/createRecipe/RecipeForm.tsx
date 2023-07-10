@@ -7,8 +7,6 @@ import {
   Button,
   Paper,
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
 
 import { CreateRecipe, RecipeSteps } from '../../models/recipe';
 import NutrientsForm from './NutrientsForm';
@@ -17,52 +15,21 @@ import ImageForm from './ImageForm';
 import RecipeStepsEditor from './RecipeStepsEditor';
 import recipeFormSchema from './recipeFormSchema';
 
-const initialValues: CreateRecipe = {
-  title: '',
-  description: '',
-  imageId: undefined,
-  calories: 0,
-  servings: 0,
-  nutrients: { carbs: 0, fat: 0, protein: 0 },
-  cookingTime: { value: 0, unit: 'h' },
-  categories: [],
-  steps: { blocks: [] },
-};
-
 interface RecipeFormProps {
+  initialValues: CreateRecipe;
   onSubmit: (
     values: CreateRecipe,
-    onSuccess: () => void,
-    onError: () => void
+    helpers: FormikHelpers<CreateRecipe>
   ) => void;
 }
 
-function RecipeForm({ onSubmit }: RecipeFormProps) {
-  const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
-
+function RecipeForm({ onSubmit, initialValues }: RecipeFormProps) {
   const handleSubmitForm = (
     values: CreateRecipe,
     helpers: FormikHelpers<CreateRecipe>
   ) => {
     helpers.setSubmitting(true);
-
-    const handleSuccess = () => {
-      enqueueSnackbar('Recipe was successfully created.', {
-        variant: 'success',
-      });
-      navigate('/recipes');
-    };
-    const handleError = () => {
-      enqueueSnackbar(
-        'Something went wrong during recipe creation. Try again later.',
-        {
-          variant: 'error',
-        }
-      );
-      helpers.setSubmitting(false);
-    };
-    onSubmit(values, handleSuccess, handleError);
+    onSubmit(values, helpers);
   };
 
   return (
@@ -106,6 +73,7 @@ function RecipeForm({ onSubmit }: RecipeFormProps) {
               />
               <FastField
                 fullWidth
+                multiline
                 name="description"
                 label="Description"
                 value={values.description}
@@ -114,7 +82,11 @@ function RecipeForm({ onSubmit }: RecipeFormProps) {
                 error={touched.description && Boolean(errors.description)}
                 helperText={touched.description && errors.description}
               />
-              <ImageForm setFieldValue={setFieldValue} error={errors.imageId} />
+              <ImageForm
+                setFieldValue={setFieldValue}
+                error={errors.imageId}
+                imageId={values.imageId}
+              />
               <Stack
                 direction="row"
                 width="100%"

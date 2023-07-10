@@ -18,6 +18,8 @@ export interface CreateRecipe
   steps: RecipeSteps;
 }
 
+export type UpdateRecipe = Omit<CreateRecipe, 'steps'>;
+
 export interface CookingTime {
   value: number;
   unit: string;
