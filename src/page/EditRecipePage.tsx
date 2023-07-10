@@ -110,8 +110,17 @@ function EditRecipePage() {
       <Suspense fallback={<Loader />}>
         <RecipeForm
           onSubmit={handleFormSubmit}
-          initialValues={{ title: recipe.title, calories: recipe.calories, nutrients: recipe.nutrients, servings: recipe.servings, imageId: recipe.imageId, categories: recipe.categories, cookingTime: recipe.cookingTime
-          , description: recipe.description , steps: recipeSteps }}
+          initialValues={{
+            title: recipe.title,
+            calories: recipe.calories,
+            nutrients: recipe.nutrients,
+            servings: recipe.servings,
+            imageId: recipe.imageId,
+            categories: recipe.categories,
+            cookingTime: recipe.cookingTime,
+            description: recipe.description,
+            steps: recipeSteps,
+          }}
         />
       </Suspense>
     </Container>
