@@ -1,16 +1,14 @@
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { lazy, Suspense } from 'react';
-import { useAppSelector } from '../../../app/hooks';
 import Loader from '../../../common/components/Loader';
 
 const UserProfileCard = lazy(() => import('../UserProfileCard'));
 
 function UserProfilePage() {
-  const user = useAppSelector((state) => state.auth.user);
-  if (!user) return null;
-
+  const { user } = useAuthenticator((context) => [context.user]);
   return (
     <Suspense fallback={<Loader height="400px" />}>
-      <UserProfileCard user={user} />
+      <UserProfileCard name={user.username} email={user.attributes?.email} />
     </Suspense>
   );
 }

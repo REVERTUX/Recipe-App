@@ -5,8 +5,10 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
+  useLocation,
 } from 'react-router-dom';
 
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import Home from './features/home';
 import Layout from './Layout';
 import RecipesPage from './page/RecipesPage';
@@ -23,26 +25,28 @@ import EditRecipePage from './page/EditRecipePage';
 interface ProtectedRouteProps {
   // eslint-disable-next-line react/require-default-props
   children?: React.ReactNode;
-  isAllowed: boolean;
   // eslint-disable-next-line react/require-default-props
   redirectPath?: string;
 }
 
 function ProtectedRoute({
   children,
-  isAllowed,
   redirectPath = '/sign-in',
 }: ProtectedRouteProps) {
-  if (!isAllowed) {
-    return <Navigate to={redirectPath} replace />;
+  // if (!isAllowed) {
+  //   return <Navigate to={redirectPath} replace />;
+  // }
+  // // eslint-disable-next-line react/jsx-no-useless-fragment
+  // return children ? <>{children}</> : <Outlet />;
+  const location = useLocation();
+  const { route } = useAuthenticator((context) => [context.route]);
+  if (route !== 'authenticated') {
+    return <Navigate to={redirectPath} state={{ from: location }} replace />;
   }
-  // eslint-disable-next-line react/jsx-no-useless-fragment
   return children ? <>{children}</> : <Outlet />;
 }
 
 function App() {
-  const { isLogged } = useAppSelector((state) => state.auth);
-
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
@@ -53,11 +57,11 @@ function App() {
         <Route path="recipes" element={<RecipesPage />} />
         <Route path="recipes/:id" element={<RecipePage />} />
 
+        <Route path="favorites" element={<FavoriteRecipesPage />} />
         {/* Protected Routes */}
-        <Route element={<ProtectedRoute isAllowed={isLogged} />}>
+        <Route element={<ProtectedRoute />}>
           <Route path="recipes/:id/edit" element={<EditRecipePage />} />
           <Route path="recipes/create" element={<CreateRecipePage />} />
-          <Route path="favorites" element={<FavoriteRecipesPage />} />
           <Route path="categories" element={<div>Categories</div>} />
           <Route path="cuisines" element={<div>Cuisines</div>} />
           <Route path="profile" element={<UserProfilePage />} />

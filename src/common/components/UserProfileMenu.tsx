@@ -2,16 +2,14 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Tooltip, IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-
-import { useAppDispatch } from '../../app/hooks';
-import { logoutUser } from '../../features/auth/authAction';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 function UserProfileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { signOut } = useAuthenticator((context) => [context.user]);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -22,8 +20,8 @@ function UserProfileMenu() {
   };
 
   const handleLogout = () => {
-    dispatch(logoutUser());
-    navigate('/');
+    signOut();
+    navigate('/sign-in');
   };
 
   const menuId = 'account-menu';

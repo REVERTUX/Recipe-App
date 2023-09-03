@@ -5,29 +5,31 @@ import type {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query';
 
-import { logoutUser } from '../features/auth/authAction';
+import { Auth } from 'aws-amplify';
 
-const baseQuery = fetchBaseQuery({ baseUrl: '/api' });
+const baseQuery = fetchBaseQuery({
+  baseUrl: '/api',
+  prepareHeaders: async (headers) => {
+    try {
+      const token = (await Auth.currentSession())
+        .getAccessToken()
+        .getJwtToken();
+      headers.set('Authorization', `${token}`);
+    } catch (error) {
+      //
+    }
+    return headers;
+  },
+});
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
+  const result = await baseQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
     // try to get a new token
-    const refreshResult = await baseQuery(
-      'authentication/refresh',
-      api,
-      extraOptions
-    );
-
-    if (refreshResult.meta?.response?.status === 200) {
-      // retry the initial query
-      result = await baseQuery(args, api, extraOptions);
-    } else {
-      api.dispatch(logoutUser());
-    }
+    await Auth.currentAuthenticatedUser({ bypassCache: true });
   }
   return result;
 };

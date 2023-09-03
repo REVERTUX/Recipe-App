@@ -1,79 +1,22 @@
-import { lazy, Suspense, useEffect } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import {
-  Container,
-  Box,
-  Avatar,
-  Typography,
-  Grid,
-  Link,
-  Alert,
-} from '@mui/material';
-
-import { useAppSelector, useAppDispatch } from '../../../app/hooks';
-import { UserSignIn } from '../../../models/user';
-import { loginUser } from '../authAction';
-import Loader from '../../../common/components/Loader';
-
-const SignInForm = lazy(() => import('../SignInForm'));
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 
 function SignInPage() {
-  const { error, user } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
+  const { route } = useAuthenticator((context) => [context.route]);
+  const location = useLocation();
   const navigate = useNavigate();
-
+  const from = location.state?.from?.pathname || '/';
   useEffect(() => {
-    // redirect to main page if user is authenticated
-    if (user) {
-      navigate('/');
+    if (route === 'authenticated') {
+      navigate(from, { replace: true });
     }
-  }, [user, navigate]);
-
-  const handleSubmit = (values: UserSignIn) => {
-    dispatch(loginUser(values));
-  };
-
+  }, [route, navigate, from]);
   return (
-    <Container maxWidth="xs">
-      <Suspense fallback={<Loader />}>
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <SignInForm onSubmit={handleSubmit} error={error} />
-          <Box width="100%" pt={1} pb={1}>
-            {error && <Alert severity="error">{error}</Alert>}
-          </Box>
-          <Grid container>
-            <Grid item xs>
-              <Link
-                component={RouterLink}
-                to="/forgot-password"
-                variant="body2"
-              >
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link component={RouterLink} to="/sign-up" variant="body2">
-                Don&apos;t have an account? Sign Up
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Suspense>
-    </Container>
+    <Box pt="10%">
+      <Authenticator hideSignUp loginMechanisms={['email', 'username']} />
+    </Box>
   );
 }
 

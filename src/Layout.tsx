@@ -17,12 +17,12 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 import CustomNavLink, {
   CustomNavLinkProps,
 } from './common/components/CustomNavLink';
 import UserProfileMenu from './common/components/UserProfileMenu';
-import { useAppSelector } from './app/hooks';
 
 const navItems: CustomNavLinkProps[] = [
   { to: '/recipes', name: 'Recipes' },
@@ -36,7 +36,7 @@ const DRAWER_WIDTH = 240;
 function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { user } = useAuthenticator((context) => [context.user]);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
