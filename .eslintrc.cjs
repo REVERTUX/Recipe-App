@@ -11,6 +11,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'plugin:testing-library/react',
+    'plugin:@next/next/recommended',
   ],
   overrides: [],
   parser: '@typescript-eslint/parser',

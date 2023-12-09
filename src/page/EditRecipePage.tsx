@@ -18,7 +18,7 @@ import Loader from '../common/components/Loader';
 const RecipeForm = lazy(() => import('../features/createRecipe/RecipeForm'));
 
 function EditRecipePage() {
-  const [updateRecipe, {}] = useUpdateRecipeMutation();
+  const [updateRecipe] = useUpdateRecipeMutation();
   const [updateRecipeSteps] = useUpdateRecipeStepsMutation();
   const { id } = useParams();
 
